@@ -46,6 +46,7 @@ module.exports = {
   mode: 'development',
   devServer: {
     hot: true,
+    publicPath: '/build',
     historyApiFallback: true,
     contentBase: path.join(__dirname, 'client'),
   },
