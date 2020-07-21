@@ -41,7 +41,28 @@ roomController.makeActive = async (req, res, next) => {
     });
   }
 };
-roomController.makeInactive = (req, res, next) => {};
+/**
+ * Set the room (UUID - in the rooms table) to inactive (False)
+ */
+roomController.makeInactive = async (req, res, next) => {
+  try {
+    const roomId = req.body.uuid;
+    query = 'UPDATE rooms SET active = False WHERE uuid = $1';
+    const values = [roomId];
+    await db.query(query, values);
+    return next();
+  } catch ({ message }) {
+    return next({
+      log: 'Error in room.makeActive',
+      status: 500,
+      message,
+    });
+  }
+};
+
+/**
+ * Create new room entry in room table
+ */
 roomController.createRoom = (req, res, next) => {};
 
 module.exports = roomController;
