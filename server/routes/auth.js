@@ -3,12 +3,16 @@ const passport = require('passport');
 
 const authController = require('../controllers/authController.js');
 
-
 router.get(
   '/spotify',
   passport.authenticate('spotify', {
-    scope: ['user:email'],
-  })
+    scope: ['user-read-email', 'user-read-private'],
+    showDialog: true,
+  }),
+  function (req, res) {
+    // The request will be redirected to spotify for authentication, so this
+    // function will not be called.
+  }
 );
 
 router.get('/fail', (req, res) => {
@@ -27,6 +31,8 @@ router.get(
     //if successful authentication:
 
     console.log('SUCCESSFUL AUTHENTICATION');
-    res.redirect('/dashboard');
+    res.redirect('/home');
   }
 );
+
+module.exports = router;
