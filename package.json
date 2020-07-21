@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"webpack-dev-server\" \"nodemon server/server.js\""
+    "dev": "concurrently \"webpack-dev-server\" \"nodemon server/server.js\"",
+    "server": "nodemon server/server.js"
   },
   "repository": {
     "type": "git",
