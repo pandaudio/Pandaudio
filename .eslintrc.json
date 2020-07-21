@@ -4,6 +4,7 @@
     "es2020": true
   },
   "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -13,6 +14,10 @@
   },
   "plugins": ["react", "prettier"],
   "rules": {
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "prettier/prettier": "error",
+    "no-unused-vars": ["warn", { "args": "none" }],
+    "prefer-destructuring": "off",
+    "radix": "off"
   }
 }
