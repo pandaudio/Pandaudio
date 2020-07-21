@@ -13,9 +13,18 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
-app.get('/test', songController.createTable, (req, res) => {
-  res.send('done!');
-});
+// Test routes for songController
+// app.get('/test', songController.createTable, (req, res) => {
+//   res.send('done!');
+// });
+
+// app.post('/test', songController.addSong, (req, res) => {
+//   res.send(res.locals.addedSong);
+// });
+
+// app.delete('/test/:songId', songController.removeSong, (req, res) => {
+//   res.send(res.locals.removedSong);
+// });
 
 // Global error handler
 app.use((err, req, res, next) => {
