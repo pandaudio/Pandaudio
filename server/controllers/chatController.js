@@ -6,6 +6,15 @@ const db = require('../models/roomModels');
 const chatController = {};
 
 let query = '';
+/**
+ * Create chat table for room if none exists
+ */
+chatController.createChat = async (req, res, next) => {};
+
+/**
+ * Add chat message to chat table based on room id
+ */
+chatController.addMessage = async (req, res, next) => {};
 
 /**
  * Get all chat history from roomId
