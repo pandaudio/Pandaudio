@@ -42,6 +42,7 @@ chatController.addMessage = async (req, res, next) => {
     query = `INSERT INTO chat${roomId}(content, owner) VALUES (${content}, ${owner})`;
 
     await db.query(query);
+    return next();
   } catch ({ message }) {
     return next({
       log: 'Error in chat.addMessage',
@@ -52,14 +53,14 @@ chatController.addMessage = async (req, res, next) => {
 };
 
 /**
- * Get all chat history from roomId
+ * Get chat history (up to 50 messages) from roomId
  */
 chatController.getAll = async (req, res, next) => {
   try {
-    const roomId = req.body.roomId;
-    query = 'SELECT * FROM rooms WHERE roomid = $1';
-    const values = [roomId];
-    const result = await db.query(query, values);
+    const { roomId } = req.body;
+    query = `SELECT * FROM chat${roomId} LIMIT 50`;
+
+    const result = await db.query(query);
     res.locals.roomChat = result.rows[0];
     return next();
   } catch ({ message }) {
