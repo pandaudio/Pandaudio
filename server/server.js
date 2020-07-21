@@ -8,7 +8,7 @@ const songController = require('./controllers/songController');
 const app = express();
 const PORT = 3000;
 
-const authRoute = require("./routes/auth-route");
+const authRoute = require("./routes/auth");
 
 // Initialize passport
 app.use(passport.initialize());
