@@ -49,6 +49,10 @@ module.exports = {
     publicPath: '/build',
     historyApiFallback: true,
     contentBase: path.join(__dirname, 'client'),
+    proxy: {
+      '/auth': 'http://localhost:3000',
+      '/api': 'http://localhost:3000',
+    },
   },
   resolve: {
     extensions: ['.js', '.jsx'],
