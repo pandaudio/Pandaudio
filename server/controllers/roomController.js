@@ -1,4 +1,4 @@
-const db = require('./..//models/roomModels');
+const db = require('./../models/roomModels');
 
 const roomController = {};
 
