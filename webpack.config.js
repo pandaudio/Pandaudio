@@ -1,5 +1,4 @@
 const path = require('path');
-const { env } = require('process');
 
 module.exports = {
   entry: './client/index.js',
