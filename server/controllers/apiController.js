@@ -1,6 +1,6 @@
 /**
  * Controller for interactions with the Spotify API
  */
-const apiContoller = {};
+const apiController = {};
 
-module.exports = apiContoller;
+module.exports = apiController;
