@@ -16,6 +16,7 @@
   "rules": {
     "prettier/prettier": "error",
     "no-unused-vars": ["warn", { "args": "none" }],
-    "prefer-destructuring": "off"
+    "prefer-destructuring": "off",
+    "radix": "off"
   }
 }
