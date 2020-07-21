@@ -18,7 +18,7 @@ chatController.createChat = async (req, res, next) => {
         id SERIAL PRIMARY KEY,
         content VARCHAR(255),
         owner VARCHAR(50),
-        created_at TIMESTAMP default now(),
+        created_at TIMESTAMP default now()
       )`;
 
     await db.query(query);
@@ -35,7 +35,21 @@ chatController.createChat = async (req, res, next) => {
 /**
  * Add chat message to chat table based on room id
  */
-chatController.addMessage = async (req, res, next) => {};
+chatController.addMessage = async (req, res, next) => {
+  try {
+    const { roomId, content, owner } = req.params;
+
+    query = `INSERT INTO chat${roomId}(content, owner) VALUES (${content}, ${owner})`;
+
+    await db.query(query);
+  } catch ({ message }) {
+    return next({
+      log: 'Error in chat.addMessage',
+      status: 500,
+      message,
+    });
+  }
+};
 
 /**
  * Get all chat history from roomId
