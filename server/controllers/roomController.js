@@ -63,6 +63,21 @@ roomController.makeInactive = async (req, res, next) => {
 /**
  * Create new room entry in room table
  */
-roomController.createRoom = (req, res, next) => {};
+roomController.createRoom = async (req, res, next) => {
+  try {
+    const roomName = res.body.roomName;
+    query =
+      'INSET INTO rooms (room_name, uuid, active) VALUES ($1, NEWID(), False)';
+    const values = [roomName];
+    await db.query(query, values);
+    return next();
+  } catch ({ message }) {
+    return next({
+      log: 'Error in room.createRoom',
+      status: 500,
+      message,
+    });
+  }
+};
 
 module.exports = roomController;
