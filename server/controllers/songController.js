@@ -30,12 +30,34 @@ songController.createTable = async (req, res, next) => {
   } catch ({ message }) {
     return next({
       log: 'Error in songController.createTable',
-      status: 500,
       message,
     });
   }
 };
 
-songController.addSong = async (req, res, next) => {}
+songController.addSong = async (req, res, next) => {
+  try {
+    const { roomId } = req.params;
+    const { track, artist, length, thumbnail, uri } = req.body;
+
+    const query = `
+      INSERT INTO ${roomId}songs (track, artist, length, thumbnail, uri)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING *`;
+
+    const result = await db.query(query, [track, artist, length, thumbnail, uri]);
+
+    res.locals.addedSong = result.rows[0];
+
+    return next();
+
+    // Catch errors
+  } catch ({ message }) {
+    return next({
+      log: 'Error in songController.addSong',
+      message,
+    });
+  }
+};
 
 module.exports = songController;
