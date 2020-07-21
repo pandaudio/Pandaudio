@@ -13,7 +13,7 @@ songController.createTable = async (req, res, next) => {
     const { roomId } = req.params;
 
     const query = `
-      CREATE TABLE IF NOT EXISTS $1-songs (
+      CREATE TABLE IF NOT EXISTS ${roomId}songs (
         id SERIAL PRIMARY KEY,
         track VARCHAR(50),
         artist VARCHAR(50),
@@ -22,7 +22,7 @@ songController.createTable = async (req, res, next) => {
         uri VARCHAR(100)
       )`;
 
-    await db.query(query, [roomId]);
+    await db.query(query);
 
     return next();
 
@@ -35,5 +35,7 @@ songController.createTable = async (req, res, next) => {
     });
   }
 };
+
+songController.addSong = async (req, res, next) => {}
 
 module.exports = songController;
