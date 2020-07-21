@@ -12,5 +12,7 @@
     "sourceType": "module"
   },
   "plugins": ["react", "prettier"],
-  "rules": {}
+  "rules": {
+    "react/jsx-props-no-spreading": "off"
+  }
 }
