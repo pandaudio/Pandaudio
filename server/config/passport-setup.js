@@ -16,31 +16,34 @@ passport.use(
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
 
-      const { id, display_name, images } = profile;
+      console.log(profile)
+
+      const { id, display_name, images } = profile._json;
+      console.log('this is the id', id)
 
       const body = { accessToken }
 
       const selectQuery = `
-        SELECT * FROM users 
-        WHERE spotifyId='${id}'`;
+        SELECT * FROM users
+        WHERE spotify_id=$1`;
 
       const insertQuery = `
-        INSERT INTO users (spotifyId, display_name) 
-        VALUES ($1, $2) 
+        INSERT INTO users (id, spotify_id, username, thumbnail) 
+        VALUES (uuid_generate_v4(), $1, $2, $3) 
         RETURNING *`;
 
-        db.query(selectQuery)
+        db.query(selectQuery, [id])
         .then((data) => {
           // User exists in database
           if (data.rows.length) {
-            body.userId = data.rows[0].spotfiyId;
+            body.userId = data.rows[0].spotify_id;
             return done(null, body);
           }
-
+          console.log('these are the image', images)
           // User does not exist, add user to database
-          db.query(insertQuery, [id, display_name])
+          db.query(insertQuery, [id, display_name, images[0] ? images[0].url : null])
             .then((user) => {
-              body.userId = user.rows[0].spotfiyId;
+              body.userId = user.rows[0].spotify_id;
               return done(null, body);
             })
             .catch((err) => console.log("INSERT QUERY", err));
