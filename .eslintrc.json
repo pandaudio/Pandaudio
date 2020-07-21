@@ -3,7 +3,7 @@
     "browser": true,
     "es2020": true
   },
-  "extends": ["plugin:react/recommended", "airbnb"],
+  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaFeatures": {
@@ -12,8 +12,9 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "prettier"],
   "rules": {
+    "prettier/prettier": "error",
     "no-unused-vars": ["warn", { "args": "none" }]
   }
 }
