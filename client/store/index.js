@@ -7,6 +7,12 @@ const initialState = {};
 
 const middleware = [thunk];
 
+/**
+ * create store
+ * @param rootReducer all combined
+ * @param initialState
+ * @param middleware to be composed using redux-devtools-extension
+ */
 const store = createStore(
   rootReducer,
   initialState,
