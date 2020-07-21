@@ -9,7 +9,28 @@ let query = '';
 /**
  * Create chat table for room if none exists
  */
-chatController.createChat = async (req, res, next) => {};
+chatController.createChat = async (req, res, next) => {
+  try {
+    const { roomId } = req.params;
+
+    query = `
+      CREATE TABLE IF NOT EXISTS chat${roomId} (
+        id SERIAL PRIMARY KEY,
+        content VARCHAR(255),
+        owner VARCHAR(50),
+        created_at TIMESTAMP default now(),
+      )`;
+
+    await db.query(query);
+    return next();
+  } catch ({ message }) {
+    return next({
+      log: 'Error in chat.createChat',
+      status: 500,
+      message,
+    });
+  }
+};
 
 /**
  * Add chat message to chat table based on room id
