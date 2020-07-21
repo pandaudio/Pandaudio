@@ -58,7 +58,7 @@ chatController.addMessage = async (req, res, next) => {
 chatController.getAll = async (req, res, next) => {
   try {
     const { roomId } = req.body;
-    query = `SELECT * FROM chat${roomId} LIMIT 50`;
+    query = `SELECT * FROM chat${roomId} ORDER BY id DESC LIMIT 50`;
 
     const result = await db.query(query);
     res.locals.roomChat = result.rows[0];
