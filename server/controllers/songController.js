@@ -1,3 +1,5 @@
+const db = require('../models/roomModels');
+
 /**
  * Controller for the interactions with the room-songs table
  */
@@ -6,8 +8,32 @@ const songController = {};
 /**
  * Create a songs table for a particular room
  */
-songController.createTable = (req, res, next) => {
-  
-}
+songController.createTable = async (req, res, next) => {
+  try {
+    const { roomId } = req.params;
+
+    const query = `
+      CREATE TABLE IF NOT EXISTS $1-songs (
+        id SERIAL PRIMARY KEY,
+        track VARCHAR(50),
+        artist VARCHAR(50),
+        length INTEGER,
+        thumbnail VARCHAR(100),
+        uri VARCHAR(100)
+      )`;
+
+    await db.query(query, [roomId]);
+
+    return next();
+
+    // Catch errors
+  } catch ({ message }) {
+    return next({
+      log: 'Error in songController.createTable',
+      status: 500,
+      message,
+    });
+  }
+};
 
 module.exports = songController;
