@@ -2,7 +2,7 @@ import React from 'react';
 import PlaybackControls from '../PlaybackControls';
 import SongSearch from '../SongSearch';
 
-const RoomPage = () => {
+const RoomPage = props => {
   return (
     <div>
       <SongSearch />

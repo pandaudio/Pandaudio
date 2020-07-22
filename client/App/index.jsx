@@ -12,6 +12,7 @@ const App = () => (
     <Switch>
       <Route exact path="/" component={LoginPage} />
       <Route exact path="/dashboard" component={DashboardPage} />
+      <Route exact path="/room" component={RoomPage} />
       <Route path="*" component={() => '404 NOT FOUND'} />
     </Switch>
   </div>
