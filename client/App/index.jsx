@@ -12,8 +12,6 @@ const App = () => (
       <Route path="*" component={() => '404 NOT FOUND'} />
     </Switch>
     <Chat />
-    <hr />
-    <TestChat />
   </div>
 );
 
