@@ -12,7 +12,7 @@ const PlaybackControls = () => {
   return (
     <div>
       <button type="submit" onClick={handleClick}>
-        {songIsPaused ? 'Pause' : 'Play'}
+        {songIsPaused ? 'Play' : 'Pause'}
       </button>
     </div>
   );

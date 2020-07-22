@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SongOption from '../SongOption';
 
 const SongSearch = () => {
   const [songName, setSongName] = useState('');
@@ -21,7 +22,7 @@ const SongSearch = () => {
         <input
           type="text"
           id="searchbar"
-          defaultValue="Enter Song"
+          placeholder="Enter Song"
           value={songName}
           onChange={handleChange}
         />

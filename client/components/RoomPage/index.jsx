@@ -1,10 +1,12 @@
 import React from 'react';
 import PlaybackControls from '../PlaybackControls';
+import SongSearch from '../SongSearch';
 
 const RoomPage = () => {
   return (
     <div>
-      <h1>Room Name</h1>
+      <SongSearch />
+      <p>Room Name</p>
       <p>Host Name</p>
       <PlaybackControls />
     </div>
