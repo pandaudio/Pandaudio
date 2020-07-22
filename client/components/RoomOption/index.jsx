@@ -1,11 +1,13 @@
 import React from 'react';
 
 const RoomOption = props => {
-  const { roomName } = props;
+  const { room } = props;
   return (
     <div>
-      <p>{roomName}</p>
+      <p>{room.room_name}</p>
       <button type="submit">Join</button>
     </div>
   );
 };
+
+export default RoomOption;

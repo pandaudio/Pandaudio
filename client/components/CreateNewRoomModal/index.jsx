@@ -24,7 +24,7 @@ const CreateNewRoomModal = props => {
   return (
     <div>
       <section className="modal-main">
-        <h1>This is Create New Room Modal</h1>
+        <h1>Create New Room</h1>
         {/* Have input field, have a button that will grab that input field value */}
         <input type="text" id="create-room" />
         <button onClick={handleClick}>Create</button>
