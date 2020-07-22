@@ -12,6 +12,8 @@ router.get('/spotify/songs', apiController.search, (req, res) => {
   res.status(200).json(res.locals.searchResult);
 });
 
-router.post('/:roomId/song', songController.addSong, (req, res) => {});
+router.post('/:roomId/song', songController.addSong, (req, res) => {
+  res.status(200).json(res.locals.addedSong)
+});
 
 module.exports = router;
