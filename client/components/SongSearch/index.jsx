@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import SongOption from '../SongOption';
 
 const SongSearch = () => {
@@ -14,6 +15,24 @@ const SongSearch = () => {
   function handleSubmit(e) {
     e.preventDefault();
     // Functionality to search for song
+
+    axios
+      .get('/api/v1/spotify/songs', {
+        searchQuery: e.target.value,
+        token: 
+      })
+      .then(function (response) {
+
+        const songInfo = {
+          nameOfSong: response.body.name,
+          nameOfArtist: response.body.artists.name,
+          url: response.body.href
+        }
+
+        setSongResults(songInfo); // ********
+      })
+      .catch(function (error) { console.log(error) });
+
   }
 
   return (
@@ -28,6 +47,7 @@ const SongSearch = () => {
         />
         <input type="submit" value="Search" />
       </form>
+      <SongOption {...{ songResults, setSongResults }} />
     </div>
   );
 };

@@ -3,8 +3,7 @@ import axios from 'axios';
 import CreateNewRoomModal from '../CreateNewRoomModal';
 import RoomOption from '../RoomOption';
 /**
- * Component: RoomPage
- * Component: CreateRoom Modal
+ * render component: CreateRoom Modal
  * render: button create room name
  */
 const DashboardPage = () => {
