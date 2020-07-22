@@ -16,6 +16,7 @@ app.use(passport.initialize());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 
 // Use routes
 app.use("/auth", authRoute);
