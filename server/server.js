@@ -13,6 +13,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 const authRoute = require('./routes/auth');
+const apiRoute = require('./routes/api');
 
 // Initialize passport
 app.use(passport.initialize());
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Use routes
 app.use('/auth', authRoute);
+app.use('/api/v1', apiRoute);
 
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'));
@@ -44,7 +46,7 @@ io.on('connection', socket => {
 //   res.send('done!');
 // });
 
-// app.post('/test', songController.addSong, (req, res) => {
+// app.post('/:roomId', songController.addSong, (req, res) => {
 //   res.send(res.locals.addedSong);
 // });
 
