@@ -2,24 +2,25 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
-require("./config/passport-setup");
-const songController = require('./controllers/songController');
-const apiController = require('./controllers/apiController');
+require('./config/passport-setup');
+// const songController = require('./controllers/songController');
+// const apiController = require('./controllers/apiController');
 
 const app = express();
 const PORT = 3000;
 
-const authRoute = require("./routes/auth");
+const authRoute = require('./routes/auth');
+const userController = require('./controllers/userController');
 
 // Initialize passport
 app.use(passport.initialize());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser())
+app.use(cookieParser());
 
 // Use routes
-app.use("/auth", authRoute);
+app.use('/auth', authRoute);
 
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'));
@@ -42,6 +43,11 @@ app.get('/', (req, res) => {
 // app.get('/test', apiController.search, (req, res, next) => {
 //   res.send('got it!')
 // })
+
+// Test routes for userController
+// app.get('/test', userController.getUserInfo, (req, res) => {
+//   res.send(res.locals);
+// });
 
 // Global error handler
 app.use((err, req, res, next) => {
