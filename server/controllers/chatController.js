@@ -11,15 +11,15 @@ let query = '';
  */
 chatController.createChat = async (req, res, next) => {
   try {
-    const { roomId } = req.params;
+    const { id } = res.locals.room;
 
     query = `
-      CREATE TABLE IF NOT EXISTS chat${roomId} (
+      CREATE TABLE IF NOT EXISTS chat${id} (
         id SERIAL PRIMARY KEY,
         content VARCHAR(255),
         owner VARCHAR(50),
         created_at TIMESTAMP default now()
-      )`;
+      );`;
 
     await db.query(query);
     return next();
@@ -37,11 +37,15 @@ chatController.createChat = async (req, res, next) => {
  */
 chatController.addMessage = async (req, res, next) => {
   try {
-    const { roomId, content, owner } = req.params;
+    const { roomId } = req.params;
+    const { content, owner } = req.body;
 
-    query = `INSERT INTO chat${roomId}(content, owner) VALUES (${content}, ${owner})`;
+    query = `INSERT INTO chat${roomId} (content, owner) VALUES ($1, $2) RETURNING *`;
 
-    await db.query(query);
+    const result = await db.query(query, [content, owner]);
+    
+    res.locals.chatMessage = result.rows[0];
+
     return next();
   } catch ({ message }) {
     return next({
@@ -57,11 +61,12 @@ chatController.addMessage = async (req, res, next) => {
  */
 chatController.getAll = async (req, res, next) => {
   try {
-    const { roomId } = req.body;
+    const { roomId } = req.params;
     query = `SELECT * FROM chat${roomId} ORDER BY id DESC LIMIT 50`;
 
     const result = await db.query(query);
-    res.locals.roomChat = result.rows[0];
+
+    res.locals.roomChat = result.rows;
     return next();
   } catch ({ message }) {
     return next({

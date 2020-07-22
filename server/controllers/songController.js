@@ -13,10 +13,10 @@ const songController = {};
  */
 songController.createTable = async (req, res, next) => {
   try {
-    const { roomId } = res.locals.room;
+    const { id } = res.locals.room;
 
     const query = `
-      CREATE TABLE IF NOT EXISTS songs${roomId} (
+      CREATE TABLE IF NOT EXISTS songs${id} (
         id SERIAL PRIMARY KEY,
         track VARCHAR(50),
         artist VARCHAR(50),

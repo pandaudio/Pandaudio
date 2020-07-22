@@ -13,7 +13,7 @@ roomController.getAllActive = async (req, res, next) => {
   try {
     query = 'SELECT * FROM rooms WHERE rooms.active = True;';
     const result = await db.query(query);
-    res.locals.activeRooms = result.rows[0];
+    res.locals.activeRooms = result.rows;
     return next();
   } catch ({ message }) {
     return next({
