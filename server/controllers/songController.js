@@ -91,6 +91,8 @@ songController.removeSong = async (req, res, next) => {
     res.locals.removedSong = result.rows[0];
 
     return next();
+
+    // Catch errors
   } catch ({ message }) {
     return next({
       log: 'Error in songController.removeSong',
