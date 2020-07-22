@@ -4,7 +4,7 @@ CREATE TABLE users (
   id UUID PRIMARY KEY,
   spotify_id VARCHAR(32) NOT NULL,
   username VARCHAR(32) NOT NULL,
-  thumbnail VARCHAR(50) NOT NULL,
+  thumbnail VARCHAR(2100) NOT NULL,
   created_at TIME DEFAULT CURRENT_TIMESTAMP
 );
 
