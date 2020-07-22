@@ -18,8 +18,8 @@ router.post(
 
 // Get all rooms
 router.get('/rooms', roomController.getAllActive, (req, res) => {
-  res.status(200).json(res.locals.activeRooms)
-})
+  res.status(200).json(res.locals.activeRooms);
+});
 
 // post song to queue
 router.post('/rooms/:roomId/songs', songController.addSong, (req, res) => {
@@ -33,8 +33,8 @@ router.get('/rooms/:roomId/chat', chatController.getAll, (req, res) => {
 
 // post chat message to room for specific room
 router.post('/rooms/:roomId/chat', chatController.addMessage, (req, res) => {
-  res.status(200).json(res.locals.chatMessage)
-})
+  res.status(200).json(res.locals.chatMessage);
+});
 
 // query songs from spotify API
 router.get('/spotify/songs', apiController.search, (req, res) => {

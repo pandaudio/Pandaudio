@@ -26,7 +26,7 @@ apiController.search = async (req, res, next) => {
       }
     );
 
-    console.log(result)
+    console.log(result);
 
     res.locals.searchResult = result.data.tracks.items;
 

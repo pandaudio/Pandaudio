@@ -43,7 +43,7 @@ chatController.addMessage = async (req, res, next) => {
     query = `INSERT INTO chat${roomId} (content, owner) VALUES ($1, $2) RETURNING *`;
 
     const result = await db.query(query, [content, owner]);
-    
+
     res.locals.chatMessage = result.rows[0];
 
     return next();
