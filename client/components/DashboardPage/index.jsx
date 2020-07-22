@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CreateNewRoomModal from '../CreateNewRoomModal';
 
 /**
@@ -8,16 +8,18 @@ import CreateNewRoomModal from '../CreateNewRoomModal';
  */
 const DashboardPage = () => {
   // state hook for a new room name
-  const [newRoomName, setNewRoomName] = useState({
-    roomName: '',
-  });
-
+  const [newRoomName, setNewRoomName] = useState({ roomName: '' });
   const [showCreateNewRoomModal, setShowCreateNewRoomModal] = useState(false);
+  const [allRooms, setAllRooms] = useState([]);
+
+  useEffect(() => {}, []);
 
   return (
     <div>
       <h1>This is a DashboardPage</h1>
-      <button onClick={() => setShowCreateNewRoomModal(true)}>Create Room</button>
+      <button type="submit" onClick={() => setShowCreateNewRoomModal(true)}>
+        Create Room
+      </button>
       {showCreateNewRoomModal && (
         <CreateNewRoomModal {...{ showCreateNewRoomModal, setShowCreateNewRoomModal }} />
       )}
