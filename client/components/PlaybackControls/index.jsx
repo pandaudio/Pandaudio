@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const PlaybackControls = () => (
-  <div>
-    <p>Play | Pause</p>
-  </div>
-);
+const PlaybackControls = () => {
+  const [songIsPaused, setPause] = useState(true);
+
+  function handleClick(e) {
+    e.preventDefault();
+    setPause(!songIsPaused);
+    // Functionality to pause song
+  }
+
+  return (
+    <div>
+      <button type="submit" onClick={handleClick}>
+        {songIsPaused ? 'Pause' : 'Play'}
+      </button>
+    </div>
+  );
+};

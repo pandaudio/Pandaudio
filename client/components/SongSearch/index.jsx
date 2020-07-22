@@ -28,3 +28,5 @@ const SongSearch = () => {
     </div>
   );
 };
+
+export default SongSearch;
