@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const passport = require('passport');
+require("./config/passport-setup");
 const songController = require('./controllers/songController');
 const { info } = require('console');
 
@@ -10,8 +12,16 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+const authRoute = require("./routes/auth");
+
+// Initialize passport
+app.use(passport.initialize());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Use routes
+app.use("/auth", authRoute);
 
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'));
