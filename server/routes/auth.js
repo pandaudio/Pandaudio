@@ -31,7 +31,7 @@ router.get(
     //if successful authentication:
 
     console.log('SUCCESSFUL AUTHENTICATION');
-    res.redirect('/home');
+    res.redirect('/dashboard');
   }
 );
 

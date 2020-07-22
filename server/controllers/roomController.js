@@ -1,4 +1,5 @@
 const db = require('../models/roomModels');
+
 /**
  * Controller for interactions with room tables
  */
@@ -12,7 +13,7 @@ roomController.getAllActive = async (req, res, next) => {
   try {
     query = 'SELECT * FROM rooms WHERE rooms.active = True;';
     const result = await db.query(query);
-    res.locals.activeRooms = result.rows[0];
+    res.locals.activeRooms = result.rows;
     return next();
   } catch ({ message }) {
     return next({
@@ -28,7 +29,7 @@ roomController.getAllActive = async (req, res, next) => {
  */
 roomController.makeActive = async (req, res, next) => {
   try {
-    const roomId = req.body.uuid;
+    const roomId = req.body.id;
     query = 'UPDATE rooms SET active = True WHERE uuid = $1';
     const values = [roomId];
     await db.query(query, values);
@@ -65,10 +66,14 @@ roomController.makeInactive = async (req, res, next) => {
  */
 roomController.createRoom = async (req, res, next) => {
   try {
-    const roomName = res.body.roomName;
-    query = 'INSERT INTO rooms (room_name, uuid, active) VALUES ($1, uuid_generate_v4(), False)';
-    const values = [roomName];
-    await db.query(query, values);
+    const { roomName, userId } = req.body;
+
+    query = 'INSERT INTO rooms (room_name, active, host) VALUES ($1, True, $2) RETURNING *';
+    const values = [roomName, userId];
+    const room = await db.query(query, values);
+
+    res.locals.room = room.rows[0];
+
     return next();
   } catch ({ message }) {
     return next({
