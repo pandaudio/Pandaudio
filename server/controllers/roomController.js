@@ -66,13 +66,13 @@ roomController.makeInactive = async (req, res, next) => {
  */
 roomController.createRoom = async (req, res, next) => {
   try {
-    const {roomName, userId} = req.body;
+    const { roomName, userId } = req.body;
 
     query = 'INSERT INTO rooms (room_name, active, host) VALUES ($1, True, $2) RETURNING *';
     const values = [roomName, userId];
     const room = await db.query(query, values);
 
-    res.locals.data = room.rows[0];
+    res.locals.room = room.rows[0];
 
     return next();
   } catch ({ message }) {
