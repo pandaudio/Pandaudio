@@ -13,17 +13,17 @@ const songController = {};
  */
 songController.createTable = async (req, res, next) => {
   try {
-    const { roomId } = req.params;
+    const { id } = res.locals.room;
 
     const query = `
-      CREATE TABLE IF NOT EXISTS songs${roomId} (
+      CREATE TABLE IF NOT EXISTS songs${id} (
         id SERIAL PRIMARY KEY,
         track VARCHAR(50),
         artist VARCHAR(50),
         length INTEGER,
         thumbnail VARCHAR(100),
         uri VARCHAR(100)
-      )`;
+      );`;
 
     await db.query(query);
 
@@ -91,6 +91,8 @@ songController.removeSong = async (req, res, next) => {
     res.locals.removedSong = result.rows[0];
 
     return next();
+
+    // Catch errors
   } catch ({ message }) {
     return next({
       log: 'Error in songController.removeSong',
