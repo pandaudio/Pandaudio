@@ -9,7 +9,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE rooms (
-  id UUID PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   room_name VARCHAR(24) NOT NULL UNIQUE,
   host UUID REFERENCES users(id) NOT NULL,
   active BOOLEAN DEFAULT 'true',

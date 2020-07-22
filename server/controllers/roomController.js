@@ -68,11 +68,11 @@ roomController.createRoom = async (req, res, next) => {
   try {
     const {roomName, userId} = req.body;
 
-    query = 'INSERT INTO rooms (room_name, id, active, host) VALUES ($1, uuid_generate_v4(), True, $2) RETURNING *';
+    query = 'INSERT INTO rooms (room_name, active, host) VALUES ($1, True, $2) RETURNING *';
     const values = [roomName, userId];
     const room = await db.query(query, values);
 
-    res.locals.roomId = room.rows[0].id;
+    res.locals.data = room.rows[0];
 
     return next();
   } catch ({ message }) {

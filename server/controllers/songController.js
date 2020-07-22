@@ -13,7 +13,7 @@ const songController = {};
  */
 songController.createTable = async (req, res, next) => {
   try {
-    const { roomId } = res.locals;
+    const { roomId } = res.locals.data;
 
     const query = `
       CREATE TABLE IF NOT EXISTS songs${roomId} (
