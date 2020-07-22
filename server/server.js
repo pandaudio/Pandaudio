@@ -5,12 +5,12 @@ const passport = require('passport');
 require('./config/passport-setup');
 // const songController = require('./controllers/songController');
 // const apiController = require('./controllers/apiController');
+// const userController = require('./controllers/userController');
 
 const app = express();
 const PORT = 3000;
 
 const authRoute = require('./routes/auth');
-const userController = require('./controllers/userController');
 
 // Initialize passport
 app.use(passport.initialize());
