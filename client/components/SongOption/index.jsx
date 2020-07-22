@@ -13,15 +13,6 @@ const SongOption = props => {
 
   }
 
-  useEffect(() => {
-    const songs = [];
-    for (let i = 0; i < songResults.length; i += 1) {
-      // songs.push(<RoomOption songs={songResults[i]} key={i} />);
-      // songs.push(<li key={i} >{nameOfSong[i]}</li>);
-      songs.push(<li key={i} >{songResults.nameOfSong[i]}</li>);
-    }
-    setSongResults(songs);
-  }, []);
 
   return (
     <div>
