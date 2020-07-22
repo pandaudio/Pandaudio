@@ -11,8 +11,6 @@ const CreateNewRoomModal = props => {
   };
 
   const handleClick = () => {
-    // const roomName = document.getElementById('create-room').value;
-    // document.getElementById('create-room').value = '';
     const userId = Cookies.get('uuid');
     const data = { userId, roomName };
     fetch('/api/v1/rooms', {
