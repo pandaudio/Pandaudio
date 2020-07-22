@@ -3,6 +3,13 @@ import React from 'react';
 const LoginPage = () => (
   <div>
     <h1>Login Page</h1>
+    <a href="/auth/spotify">Login with Spotify</a>
+  </div>
+);
+
+export default LoginPage;
+
+/*
     <button
       type="submit"
       onClick={() => {
@@ -11,7 +18,4 @@ const LoginPage = () => (
     >
       Login with Spotify
     </button>
-  </div>
-);
-
-export default LoginPage;
+*/
