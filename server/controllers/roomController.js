@@ -1,5 +1,5 @@
 const db = require('../models/roomModels');
-const { restart } = require('nodemon');
+
 /**
  * Controller for interactions with room tables
  */
