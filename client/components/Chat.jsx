@@ -47,7 +47,7 @@ const Chat = props => {
     <div>
       <h1>Chat.js</h1>
       {feed}
-      <input type="text" id="chatText"></input>
+      <input type="text" id="chatText" />
       <button className="firstButton" onClick={handleClick}>
         Send
       </button>
