@@ -16,7 +16,7 @@ songController.createTable = async (req, res, next) => {
     const { roomId } = req.params;
 
     const query = `
-      CREATE TABLE IF NOT EXISTS ${roomId}songs (
+      CREATE TABLE IF NOT EXISTS songs${roomId} (
         id SERIAL PRIMARY KEY,
         track VARCHAR(50),
         artist VARCHAR(50),
@@ -53,7 +53,7 @@ songController.addSong = async (req, res, next) => {
     const { track, artist, length, thumbnail, uri } = req.body;
 
     const query = `
-      INSERT INTO ${roomId}songs (track, artist, length, thumbnail, uri)
+      INSERT INTO songs${roomId} (track, artist, length, thumbnail, uri)
       VALUES ($1, $2, $3, $4, $5)
       RETURNING *`;
 
@@ -82,7 +82,7 @@ songController.removeSong = async (req, res, next) => {
     const { roomId, songId } = req.params;
 
     const query = `
-      DELETE FROM ${roomId}songs
+      DELETE FROM songs${roomId}
       WHERE id = $1
       RETURNING *`;
 

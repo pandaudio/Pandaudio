@@ -1,5 +1,4 @@
 const path = require('path');
-const { env } = require('process');
 
 module.exports = {
   entry: './client/index.js',
@@ -49,12 +48,10 @@ module.exports = {
     publicPath: '/build',
     historyApiFallback: true,
     contentBase: path.join(__dirname, 'client'),
-    proxy: [
-      {
-        context: ['/auth', '/api'],
-        target: 'http://localhost:3000',
-      },
-    ],
+    proxy: {
+      '/api': 'http://localhost:3000',
+      '/auth': 'http://localhost:3000',
+    },
   },
   resolve: {
     extensions: ['.js', '.jsx'],
