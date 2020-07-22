@@ -1,4 +1,5 @@
 const db = require('../models/roomModels');
+const { restart } = require('nodemon');
 /**
  * Controller for interactions with room tables
  */
@@ -28,7 +29,7 @@ roomController.getAllActive = async (req, res, next) => {
  */
 roomController.makeActive = async (req, res, next) => {
   try {
-    const roomId = req.body.uuid;
+    const roomId = req.body.id;
     query = 'UPDATE rooms SET active = True WHERE uuid = $1';
     const values = [roomId];
     await db.query(query, values);
@@ -65,10 +66,14 @@ roomController.makeInactive = async (req, res, next) => {
  */
 roomController.createRoom = async (req, res, next) => {
   try {
-    const roomName = res.body.roomName;
-    query = 'INSERT INTO rooms (room_name, uuid, active) VALUES ($1, uuid_generate_v4(), False)';
-    const values = [roomName];
-    await db.query(query, values);
+    const {roomName, userId} = req.body;
+
+    query = 'INSERT INTO rooms (room_name, id, active, host) VALUES ($1, uuid_generate_v4(), True, $2) RETURNING *';
+    const values = [roomName, userId];
+    const room = await db.query(query, values);
+
+    res.locals.roomId = room.rows[0].id;
+
     return next();
   } catch ({ message }) {
     return next({
