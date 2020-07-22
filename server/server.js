@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const songController = require('./controllers/songController');
+const apiController = require('./controllers/apiController');
 
 const app = express();
 const PORT = 3000;
@@ -25,6 +26,11 @@ app.get('/', (req, res) => {
 // app.delete('/test/:songId', songController.removeSong, (req, res) => {
 //   res.send(res.locals.removedSong);
 // });
+
+// Test routes for apiController
+// app.get('/test', apiController.search, (req, res, next) => {
+//   res.send('got it!')
+// })
 
 // Global error handler
 app.use((err, req, res, next) => {
