@@ -4,6 +4,8 @@ const SongSearch = () => {
   const [songName, setSongName] = useState('');
   const [songResults, setSongResults] = useState([]);
 
+  // useEffect to pass songs down to SongOption component
+
   function handleChange(e) {
     setSongName(e.target.value);
   }

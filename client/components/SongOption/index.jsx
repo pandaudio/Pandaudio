@@ -28,3 +28,5 @@ SongOption.propTypes = {
   songName: PropTypes.string.isRequired,
   artist: PropTypes.string,
 };
+
+export default SongOption;

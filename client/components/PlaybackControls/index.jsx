@@ -17,3 +17,5 @@ const PlaybackControls = () => {
     </div>
   );
 };
+
+export default PlaybackControls;
