@@ -2,12 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const SongOption = props => {
-  const { songName, artist } = props;
+
+  // const { songName, artist, songResults, setSongResults } = props; *****
+  const { songResults, setSongResults } = props;
+  const { nameOfSong, nameOfArtist } = songResults; // ******** 
 
   function handleClick(e) {
     e.preventDefault();
-    // Functionality to add song
+    // Functionality to add song 
+
   }
+
 
   return (
     <div>
