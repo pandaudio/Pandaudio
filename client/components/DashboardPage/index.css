@@ -1,0 +1,15 @@
+h1 {
+ font-family: Arial, Helvetica, sans-serif;
+}
+
+.dashboard-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.dashboard-box {
+  display: 1;
+  padding: 10px;
+  background-color: aqua;
+  border: 1px solid;
+}

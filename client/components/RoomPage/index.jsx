@@ -6,6 +6,7 @@ import SongSearch from '../SongSearch';
 import Chat from '../Chat';
 import axios from 'axios';
 import { useSelector, useStore } from 'react-redux';
+import './index.css'
 
 const socket = io.connect('http://localhost:3000');
 
@@ -167,9 +168,9 @@ const RoomPage = props => {
 
   const { location } = props;
   return (
-    <div>
+    <div className="room-page">
       {location.state.isHost ? (
-        <div>
+        <div className="addsong-container">
           <button type="submit" onClick={toggleOpen}>
             Add Song
           </button>
@@ -180,26 +181,32 @@ const RoomPage = props => {
           </Modal>
         </div>
       ) : null}
-      {location.state.roomInfo.id}
-      <br />
-      {roomInfo.room_name}
-      <br />
-      {roomInfo.host}
-      <br />
-      {roomInfo.active ? 'active' : 'inactive'}
-      <br />
-      {roomInfo.created_at}
+      <div className="song-info-container">
+        {location.state.roomInfo.id}
+        <br />
+        {roomInfo.room_name}
+        <br />
+        {roomInfo.host}
+        <br />
+        {roomInfo.active ? 'active' : 'inactive'}
+        <br />
+        {roomInfo.created_at}
+      </div>
       {isHost && playerState.ready ? (
-        <PlaybackControls
-          playSong={() => {
-            handlePlay();
-          }}
-          pauseSong={() => {
-            handlePause();
-          }}
-        />
+        <div className="playback-control-container">
+          <PlaybackControls
+            playSong={() => {
+              handlePlay();
+            }}
+            pauseSong={() => {
+              handlePause();
+            }}
+          />
+        </div>
       ) : null}
-      <Chat roomId={roomInfo.id} />
+      <div className="chat-container">
+        <Chat roomId={roomInfo.id} />
+      </div>
     </div>
   );
 };

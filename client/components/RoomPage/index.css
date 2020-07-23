@@ -1,0 +1,19 @@
+.room-page {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.addsong-container {
+  background-color: cadetblue;
+}
+
+.song-info-container {
+  background-color: cornflowerblue;
+}
+
+.playback-control-container {
+  background-color: darkgreen;
+}
+
+.chat-container {
+  background-color: darkgrey;
+}
