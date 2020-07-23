@@ -25,6 +25,10 @@ router.get('/rooms', roomController.getAllActive, (req, res) => {
 router.get('/rooms/:roomId/songs', songController.getAll, (req, res) => {
   res.status(200).json(res.locals.roomSongs)
 })
+// set room to inactive
+router.put('/rooms', roomController.makeInactive, (req, res) => {
+  res.sendStatus(200);
+});
 
 // post song to queue
 router.post('/rooms/:roomId/songs', songController.addSong, (req, res) => {

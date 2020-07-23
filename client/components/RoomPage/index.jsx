@@ -81,6 +81,8 @@ const RoomPage = props => {
       console.log('Incoming message: ', data);
       pauseSong(window.globalSpotifyPlayer);
     });
+
+
   }, []);
 
   const setup = () => {
