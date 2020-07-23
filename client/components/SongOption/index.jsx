@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SONG_QUEUE_ADD } from '../../store/action_types/songQueue';
 
 const SongOption = props => {
@@ -21,9 +21,25 @@ const SongOption = props => {
       .then(response => response.json())
       .then(data => {
         console.log('Song Added to Queue!');
-        
-        dispatch({type: SONG_QUEUE_ADD, payload: data})
         // dispatch response data to redux
+        dispatch({type: SONG_QUEUE_ADD, payload: data})
+        
+        //add to player queue
+        window.globalSpotifyPlayer._options.getOAuthToken(access_token => {
+            fetch(`https://api.spotify.com/v1/me/player/queue?uri=${data.uri}`, {
+            method: 'POST', // or 'PUT'
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${access_token}`,
+            },
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log('added to player queue!!!')
+          })
+        })
+
+
       })
       .catch(error => {
         console.error('Error:', error);
