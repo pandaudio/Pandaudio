@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useSelector, useStore } from 'react-redux';
 import PlaybackControls from '../PlaybackControls';
 import SongSearch from '../SongSearch';
-import HostEndRoomButton from '../HostEndRoomButton';
+import HostDisableRoomButton from '../HostDisableRoomButton';
 import Chat from '../Chat';
 
 const socket = io.connect('http://localhost:3000');
@@ -174,7 +174,7 @@ const RoomPage = props => {
           <button type="submit" onClick={toggleOpen}>
             Add Song
           </button>
-          <HostEndRoomButton />
+          <HostDisableRoomButton />
           <Modal open={open} onClose={toggleOpen} className={classes.modal}>
             <div className={classes.paper}>
               <SongSearch roomId={location.state.roomInfo.id} />

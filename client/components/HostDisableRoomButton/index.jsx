@@ -1,13 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const HostEndRoomButton = props => {
+const HostDisableRoomButton = props => {
   const history = useHistory();
 
   function handleClick(e) {
     e.preventDefault();
-    // Delete Room
-    // Delete Chat
+    // Disable Room
     // Go Back to DashBoard
 
     history.goBack();
@@ -20,4 +19,4 @@ const HostEndRoomButton = props => {
   );
 };
 
-export default HostEndRoomButton;
+export default HostDisableRoomButton;

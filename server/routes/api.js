@@ -21,6 +21,11 @@ router.get('/rooms', roomController.getAllActive, (req, res) => {
   res.status(200).json(res.locals.activeRooms);
 });
 
+// set room to inactive
+router.put('/rooms', roomController.makeInactive, (req, res) => {
+  res.sendStatus(200);
+});
+
 // post song to queue
 router.post('/rooms/:roomId/songs', songController.addSong, (req, res) => {
   res.status(200).json(res.locals.addedSong);
@@ -40,11 +45,5 @@ router.post('/rooms/:roomId/chat', chatController.addMessage, (req, res) => {
 router.post('/spotify/songs', apiController.search, (req, res) => {
   res.status(200).json(res.locals.searchResult);
 });
-
-/*
-router.delete('/rooms/:roomId', roomController.deleteRoom, (req, res) => {
-  res.sendStatus(200);
-});
-*/
 
 module.exports = router;
