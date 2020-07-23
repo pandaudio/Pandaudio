@@ -1,18 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/**
- * Insert a new entry for a song added to the room-songs table
- * @requires  roomId {string} UUID provided in request params
- * @requires  track {string} The name of the song
- * @requires  artist {string} The track artists
- * @requires  length {integer} The length of the song in seconds ()
- * @requires  thumbnail {string} The url of the song cover art
- * @requires  uri {string} The Spotify uri of the song
- */
-
 const SongOption = props => {
-  // const { songName, artist, songResults, setSongResults } = props; *****
   const { roomId, track, artist, length, thumbnail, uri } = props;
 
   function handleClick(e) {
@@ -34,12 +23,6 @@ const SongOption = props => {
       .catch(error => {
         console.error('Error:', error);
       });
-    /*
-    // post song to queue
-    router.post('/rooms/:roomId/songs', songController.addSong, (req, res) => {
-    res.status(200).json(res.locals.addedSong);
-    });
-    */
   }
 
   return (
@@ -52,17 +35,11 @@ const SongOption = props => {
   );
 };
 
-/*
-SongOption.defaultProps = {
-  artist: '-',
-};
-*/
-
 SongOption.propTypes = {
-  roomId: PropTypes.string.isRequired,
+  roomId: PropTypes.number.isRequired,
   track: PropTypes.string.isRequired,
   artist: PropTypes.string.isRequired,
-  length: PropTypes.string.isRequired,
+  length: PropTypes.number.isRequired,
   thumbnail: PropTypes.string.isRequired,
   uri: PropTypes.string.isRequired,
 };

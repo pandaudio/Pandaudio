@@ -20,7 +20,7 @@ const SongSearch = props => {
     const data = { token: accessToken, searchQuery: songName };
 
     fetch('/api/v1/spotify/songs', {
-      method: 'POST', // or 'PUT'
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -43,6 +43,7 @@ const SongSearch = props => {
               length={length}
               thumbnail={thumbnail}
               uri={uri}
+              key={`songOption${i}`}
             />
           );
         }
@@ -51,16 +52,6 @@ const SongSearch = props => {
       .catch(error => {
         console.error('Error:', error);
       });
-
-    /**
-     * Insert a new entry for a song added to the room-songs table
-     * @requires  roomId {string} UUID provided in request params
-     * @requires  track {string} The name of the song
-     * @requires  artist {string} The track artists
-     * @requires  length {integer} The length of the song in seconds ()
-     * @requires  thumbnail {string} The url of the song cover art
-     * @requires  uri {string} The Spotify uri of the song
-     */
   }
 
   return (
