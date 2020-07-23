@@ -3,9 +3,10 @@ import Cookies from 'js-cookie';
 
 const socket = io.connect('http://localhost:3000');
 
-const Chat = props => {
+const Chat = ({ roomId }) => {
   const uuid = Cookies.get('uuid');
   console.log('this is your useID:   ', uuid);
+  console.log('these are your props:   ', roomId);
 
   const [comments, addComment] = useState([
     // { username: 'Michael', text: 'Whatup', thumbnail: 'thumbnail', created_at: 'today' },
@@ -17,6 +18,7 @@ const Chat = props => {
     feed.push(
       <div key={i}>
         <p>
+          <img src={comments[i].thumbnail} />
           <span>{comments[i].username}:</span>
           {comments[i].text}
           <span> {comments[i].created_at}</span>
@@ -28,9 +30,9 @@ const Chat = props => {
   const handleClick = () => {
     const currentMessage = document.getElementById('chatText').value;
     document.getElementById('chatText').value = '';
-    socket.emit('join_room', 'a room id');
+    socket.emit('join_room', `chat${roomId}`);
     socket.emit('chat', {
-      room: 'a room id', // UUID params
+      room: `chat${roomId}`, // UUID params
       message: currentMessage,
       uuid,
     });

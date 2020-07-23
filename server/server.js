@@ -41,7 +41,7 @@ io.on('connection', socket => {
   });
 
   socket.on('chat', async data => {
-    console.log('Getting chat from room', `${data.uuid}`);
+    console.log('Getting chat from room', data);
     // Query to get user thumbnail and username to send back to the chat room
     const query = `
       SELECT username, thumbnail FROM users
