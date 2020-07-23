@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useStore } from 'react-redux';
 import PlaybackControls from '../PlaybackControls';
 import SongSearch from '../SongSearch';
+import HostDisableRoomButton from '../HostDisableRoomButton';
 import Chat from '../Chat';
-import axios from 'axios';
-import { useSelector, useStore } from 'react-redux';
-import './index.css'
+import './index.css';
 
 const URL = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000';
 const socket = io.connect(URL);
@@ -63,7 +63,7 @@ const RoomPage = props => {
     socket.on('play', data => {
       console.log('Incoming play message: ', data);
 
-      //only play song if the targetGuest is my own socket.id or if its falsy (broadcast to everyone to play)
+      // only play song if the targetGuest is my own socket.id or if its falsy (broadcast to everyone to play)
       if (data.targetGuest === socket.id || !data.targetGuest) {
         playSong(window.globalSpotifyPlayer, data.spotify_uri, data.start_time);
       }
@@ -175,6 +175,7 @@ const RoomPage = props => {
           <button className="btn-addsong" type="submit" onClick={toggleOpen}>
             Add Song
           </button>
+          <HostDisableRoomButton roomId={location.state.roomInfo.id} />
           <Modal open={open} onClose={toggleOpen} className={classes.modal}>
             <div className={classes.paper}>
               <SongSearch roomId={location.state.roomInfo.id} />
@@ -185,9 +186,7 @@ const RoomPage = props => {
       <div className="song-info-container">
         {location.state.roomInfo.id}
         <br />
-        <div className="room-name-box">
-          {roomInfo.room_name}
-        </div>
+        <div className="room-name-box">{roomInfo.room_name}</div>
         <br />
         {roomInfo.host}
         <br />
