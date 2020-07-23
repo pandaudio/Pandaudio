@@ -6,6 +6,10 @@ img {
   width: 200px !important;
   height: auto !important;
   margin-top: 5vh;
+  transition: 200ms;
+}
+img:hover {
+  background-color: black;
 }
 .login {
   display: flex;
