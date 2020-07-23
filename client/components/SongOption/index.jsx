@@ -26,7 +26,7 @@ const SongOption = props => {
         
         //add to player queue
         window.globalSpotifyPlayer._options.getOAuthToken(access_token => {
-            fetch(`https://api.spotify.com/v1/me/player/queue?uri=${data.uri}`, {
+            fetch(`https://api.spotify.com/v1/me/player/queue?uri=${data.uri}&device_id=${window.globalSpotifyPlayer._options.id}`, {
             method: 'POST', // or 'PUT'
             headers: {
               'Content-Type': 'application/json',
