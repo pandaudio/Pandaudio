@@ -14,10 +14,12 @@ img {
   align-items: center;
   text-align: center;
   min-height: 100vh;
-  background-color: #292e30;
+  background-image: url('https://images.unsplash.com/photo-1420161900862-9a86fa1f5c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .login-border {
-  border: solid 5px #2a3439;
+  border: solid 2px #2a3439;
   padding: 100px 30px;
   background-color: #808080;
   border-radius: 20px;
