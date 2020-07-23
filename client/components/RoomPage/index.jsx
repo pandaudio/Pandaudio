@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useStore, useDispatch } from 'react-redux';
+import moment from 'moment';
 import PlaybackControls from '../PlaybackControls';
 import SongSearch from '../SongSearch';
-import Chat from '../Chat';
 import HostDisableRoomButton from '../HostDisableRoomButton';
+import Chat from '../Chat';
 import { SONG_QUEUE_UPDATE } from '../../store/action_types/songQueue';
-import './index.css';
+import './index.scss';
 
 const URL = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000';
 const socket = io.connect(URL);
@@ -210,43 +211,44 @@ const RoomPage = props => {
   const { location } = props;
   return (
     <div className="room-page">
-      {location.state.isHost ? (
-        <div className="addsong-container">
-          <button className="btn-addsong" type="submit" onClick={toggleOpen}>
-            Add Song
-          </button>
-          <HostDisableRoomButton roomId={location.state.roomInfo.id} />
-          <Modal open={open} onClose={toggleOpen} className={classes.modal}>
-            <div className={classes.paper}>
-              <SongSearch roomId={location.state.roomInfo.id} />
-            </div>
-          </Modal>
+      <div className="room-content">
+        {location.state.isHost ? (
+          <div className="addsong-container">
+            <button className="btn-addsong" type="submit" onClick={toggleOpen}>
+              Add Song
+            </button>
+            <HostDisableRoomButton roomId={location.state.roomInfo.id} />
+            <Modal open={open} onClose={toggleOpen} className={classes.modal}>
+              <div className={classes.paper}>
+                <SongSearch roomId={location.state.roomInfo.id} />
+              </div>
+            </Modal>
+          </div>
+        ) : null}
+        <div className="room-header">
+          {/* {location.state.roomInfo.id} */}
+          <h2>{roomInfo.room_name}</h2>
+          <p>{`Host: ${roomInfo.host}`}</p>
+          <p>
+            {`Uptime: ${Math.floor(
+              moment.duration(moment(roomInfo.created_at, 'HH:mm:ss').diff(moment())).asMinutes()
+            )} minutes`}
+          </p>
         </div>
-      ) : null}
-      <div className="song-info-container">
-        {location.state.roomInfo.id}
-        <br />
-        <div className="room-name-box">{roomInfo.room_name}</div>
-        <br />
-        {roomInfo.host}
-        <br />
-        {roomInfo.active ? 'active' : 'inactive'}
-        <br />
-        {roomInfo.created_at}
+        {isHost && playerState.ready && songQueueReady ? (
+          <div className="playback-control-container">
+            <PlaybackControls
+              playSong={() => {
+                handlePlay();
+              }}
+              pauseSong={() => {
+                handlePause();
+              }}
+            />
+          </div>
+        ) : null}
       </div>
-      {isHost && playerState.ready && songQueueReady ? (
-        <div className="playback-control-container">
-          <PlaybackControls
-            playSong={() => {
-              handlePlay();
-            }}
-            pauseSong={() => {
-              handlePause();
-            }}
-          />
-        </div>
-      ) : null}
-      <div className="chat-container">
+      <div className="room-chat">
         <Chat roomId={roomInfo.id} />
       </div>
     </div>
