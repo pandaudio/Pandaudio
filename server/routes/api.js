@@ -41,8 +41,10 @@ router.post('/spotify/songs', apiController.search, (req, res) => {
   res.status(200).json(res.locals.searchResult);
 });
 
+/*
 router.delete('/rooms/:roomId', roomController.deleteRoom, (req, res) => {
   res.sendStatus(200);
 });
+*/
 
 module.exports = router;
