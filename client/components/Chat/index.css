@@ -1,0 +1,15 @@
+.chatBox {
+  width: auto;
+}
+.chatFeed {
+  height: 500px;
+  background-color: grey;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+}
+img {
+  height: 50px;
+  width: auto;
+  border-radius: 50%;
+}
