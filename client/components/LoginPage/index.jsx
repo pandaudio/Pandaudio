@@ -1,9 +1,18 @@
 import React from 'react';
+import './index.css';
 
 const LoginPage = () => (
-  <div>
-    <h1>Login Page</h1>
-    <a href="/auth/spotify">Login with Spotify</a>
+  <div className="login">
+    <div className="login-border">
+      <h1>Login with Spotify!</h1>
+
+      <a href="/auth/spotify">
+        <img
+          src=" https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/168px-Spotify_logo_without_text.svg.png"
+          alt="not rendering"
+        />
+      </a>
+    </div>
   </div>
 );
 

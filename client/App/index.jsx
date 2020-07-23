@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 
 import { PLAYER_STATE_UPDATE, PLAYER_READY_UPDATE } from '../store/action_types/player';
 import { useDispatch } from 'react-redux';
+import { SONG_QUEUE_UPDATE } from '../store/action_types/songQueue';
 
 const App = () => {
   // NOTE: This is for storing the player in the Store in case window strategy doesn't work

@@ -43,7 +43,14 @@ const DashboardPage = () => {
       .then(function (response) {
         const rooms = [];
         for (let i = 0; i < response.data.length; i += 1) {
-          rooms.push(<div className="dashboard-box"><RoomOption room={response.data[i]} key={i} /></div>);
+          console.log('The Room Data', response.data[i]);
+          if (response.data[i].active) {
+            rooms.push(
+              <div className="dashboard-box">
+                <RoomOption room={response.data[i]} key={i} />
+              </div>
+            );
+          }
         }
         setAllRooms(rooms);
       })
@@ -67,9 +74,7 @@ const DashboardPage = () => {
           <CreateNewRoomModal />
         </div>
       </Modal>
-      <div className="dashboard-container" >
-        {allRooms}
-      </div>
+      <div className="dashboard-container">{allRooms}</div>
     </div>
   );
 };

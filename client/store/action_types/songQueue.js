@@ -1,0 +1,2 @@
+export const SONG_QUEUE_UPDATE = "SONG_QUEUE_UPDATE"
+export const SONG_QUEUE_ADD= "SONG_QUEUE_ADD"
