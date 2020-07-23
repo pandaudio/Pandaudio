@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import Cookies from 'js-cookie';
 
 const socket = io.connect('http://localhost:3000');
 
 const Chat = props => {
+  const uuid = Cookies.get('uuid');
+  console.log('this is your useID:   ', uuid);
+
   const [comments, addComment] = useState([
     // { username: 'Michael', text: 'Whatup', thumbnail: 'thumbnail', created_at: 'today' },
   ]);
@@ -20,6 +24,7 @@ const Chat = props => {
       </div>
     );
   }
+
   const handleClick = () => {
     const currentMessage = document.getElementById('chatText').value;
     document.getElementById('chatText').value = '';
@@ -27,15 +32,17 @@ const Chat = props => {
     socket.emit('chat', {
       room: 'a room id', // UUID params
       message: currentMessage,
+      uuid,
     });
   };
+
   socket.on('chat', data => {
     console.log('Incoming message: ', data);
     console.log('this is what comments looks like: ', comments);
     addComment(
       comments.concat([
         {
-          username: 'Michael',
+          username: uuid,
           text: data,
           thumbnail: 'thumbnail',
           created_at: new Date().toLocaleTimeString(),
