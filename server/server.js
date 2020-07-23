@@ -72,6 +72,12 @@ io.on('connection', socket => {
 
     io.to(data.room).emit('pause', data);
   })
+
+  socket.on('requestPlayInfo', async data => {
+    console.log('Getting requestPlayInfo from room', data);
+
+    io.to(data.room).emit('requestPlayInfo', data)
+  })
 });
 
 /**

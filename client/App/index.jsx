@@ -7,12 +7,12 @@ import DashboardPage from '../components/DashboardPage';
 // import { PrivateRoute } from './PrivateRoute';
 import Cookies from 'js-cookie';
 
-import { PLAYER_INITIALIZE } from '../store/action_types/player';
+import { PLAYER_UPDATE } from '../store/action_types/player';
 import { useDispatch } from 'react-redux';
 
 const App = () => {
   // NOTE: This is for storing the player in the Store in case window strategy doesn't work
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const accessToken = Cookies.get('accessToken');
   const [deviceId, setDeviceId] = useState("");
 
@@ -43,6 +43,12 @@ const App = () => {
         let { device_id } = data;
         console.log("Let the music play on!");
         setDeviceId(device_id);
+      });
+
+      // Playback status updates
+      newPlayer.addListener('player_state_changed', state => {
+        // store in player store
+        dispatch({type: PLAYER_UPDATE, payload: state})
       });
 
       // intialize the player connection immediatley after intializing
