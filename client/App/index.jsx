@@ -3,10 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 import LoginPage from '../components/LoginPage';
 import RoomPage from '../components/RoomPage';
 import DashboardPage from '../components/DashboardPage';
+// import Chat from '../components/Chat';
 // import { PrivateRoute } from './PrivateRoute';
-import Chat from '../components/Chat.jsx';
-import TestChat from '../components/TestChat.jsx';
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 
 import { PLAYER_INITIALIZE } from '../store/action_types/player';
 import { useDispatch } from 'react-redux';
@@ -27,7 +26,7 @@ const App = () => {
   const checkForPlayer = () => {
     if (window.Spotify !== null) {
       clearInterval(playerCheckInterval);
-      console.log(accessToken)
+      console.log(accessToken);
       const newPlayer = new window.Spotify.Player({
         name: 'Music Zoom Player',
         getOAuthToken: cb => {

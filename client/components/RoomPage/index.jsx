@@ -3,6 +3,7 @@ import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PlaybackControls from '../PlaybackControls';
 import SongSearch from '../SongSearch';
+import Chat from '../Chat';
 
 const useStyles = makeStyles(theme => ({
   modal: {
@@ -28,7 +29,6 @@ const RoomPage = props => {
   };
 
   const { location } = props;
-
   return (
     <div>
       {location.state.isHost ? (
@@ -53,6 +53,7 @@ const RoomPage = props => {
       <br />
       {location.state.roomInfo.created_at}
       {location.state.isHost ? <PlaybackControls /> : null}
+      <Chat roomId={location.state.roomInfo.id} />
     </div>
   );
 };
