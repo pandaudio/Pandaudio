@@ -37,7 +37,7 @@ router.post('/rooms/:roomId/chat', chatController.addMessage, (req, res) => {
 });
 
 // query songs from spotify API
-router.get('/spotify/songs', apiController.search, (req, res) => {
+router.post('/spotify/songs', apiController.search, (req, res) => {
   res.status(200).json(res.locals.searchResult);
 });
 

@@ -7,7 +7,7 @@ require('./config/passport-setup');
 // const apiController = require('./controllers/apiController');
 // const userController = require('./controllers/userController');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 const http = require('http').Server(app);
@@ -43,28 +43,20 @@ io.on('connection', socket => {
     io.to(data.room).emit('chat', data.message);
   });
 });
-// Test routes for songController
-// app.get('/test', songController.createTable, (req, res) => {
-//   res.send('done!');
-// });
 
-// app.post('/:roomId', songController.addSong, (req, res) => {
-//   res.send(res.locals.addedSong);
-// });
+/**
+ * ***************************************
+ * Serve static files in production mode *
+ * ***************************************
+ */
+if (process.env.NODE_ENV === 'production') {
+  app.use('/build', express.static(path.resolve(__dirname, '../build')));
 
-// app.delete('/test/:songId', songController.removeSong, (req, res) => {
-//   res.send(res.locals.removedSong);
-// });
-
-// Test routes for apiController
-// app.get('/test', apiController.search, (req, res, next) => {
-//   res.send('got it!')
-// })
-
-// Test routes for userController
-// app.get('/test', userController.getUserInfo, (req, res) => {
-//   res.send(res.locals);
-// });
+  // Handle redirects
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/index.html'));
+  });
+}
 
 // Global error handler
 app.use((err, req, res, next) => {

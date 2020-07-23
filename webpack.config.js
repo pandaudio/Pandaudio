@@ -42,7 +42,7 @@ module.exports = {
       },
     ],
   },
-  mode: 'development',
+  mode: process.env.NODE_ENV,
   devServer: {
     hot: true,
     publicPath: '/build',
