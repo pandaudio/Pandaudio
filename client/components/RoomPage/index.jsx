@@ -6,6 +6,7 @@ import SongSearch from '../SongSearch';
 import Chat from '../Chat';
 import axios from 'axios';
 import { useSelector, useStore } from 'react-redux';
+import './index.css'
 
 const URL = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000';
 const socket = io.connect(URL);
@@ -168,10 +169,10 @@ const RoomPage = props => {
 
   const { location } = props;
   return (
-    <div>
+    <div className="room-page">
       {location.state.isHost ? (
-        <div>
-          <button type="submit" onClick={toggleOpen}>
+        <div className="addsong-container">
+          <button className="btn-addsong" type="submit" onClick={toggleOpen}>
             Add Song
           </button>
           <Modal open={open} onClose={toggleOpen} className={classes.modal}>
@@ -181,26 +182,34 @@ const RoomPage = props => {
           </Modal>
         </div>
       ) : null}
-      {location.state.roomInfo.id}
-      <br />
-      {roomInfo.room_name}
-      <br />
-      {roomInfo.host}
-      <br />
-      {roomInfo.active ? 'active' : 'inactive'}
-      <br />
-      {roomInfo.created_at}
+      <div className="song-info-container">
+        {location.state.roomInfo.id}
+        <br />
+        <div className="room-name-box">
+          {roomInfo.room_name}
+        </div>
+        <br />
+        {roomInfo.host}
+        <br />
+        {roomInfo.active ? 'active' : 'inactive'}
+        <br />
+        {roomInfo.created_at}
+      </div>
       {isHost && playerState.ready ? (
-        <PlaybackControls
-          playSong={() => {
-            handlePlay();
-          }}
-          pauseSong={() => {
-            handlePause();
-          }}
-        />
+        <div className="playback-control-container">
+          <PlaybackControls
+            playSong={() => {
+              handlePlay();
+            }}
+            pauseSong={() => {
+              handlePause();
+            }}
+          />
+        </div>
       ) : null}
-      <Chat roomId={roomInfo.id} />
+      <div className="chat-container">
+        <Chat roomId={roomInfo.id} />
+      </div>
     </div>
   );
 };
