@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
+import Axios from 'axios';
 
 const socket = io.connect('http://localhost:3000');
 
@@ -7,6 +8,21 @@ const Chat = ({ roomId }) => {
   const uuid = Cookies.get('uuid');
   console.log('this is your useID:   ', uuid);
   console.log('these are your props:   ', roomId);
+
+  // Enter key in the input box will send messages
+  window.addEventListener('DOMContentLoaded', event => {
+    document.getElementById('chatText').addEventListener('keyup', event => {
+      event.preventDefault();
+      if (event.keyCode === 13) {
+        document.getElementById('send').click();
+      }
+    });
+  });
+
+  // Fetch chat log from db on mount, not complete
+  // useEffect(() => {
+  //   Axios.get('/chat')
+  // }, []);
 
   const [comments, addComment] = useState([
     // { username: 'Michael', text: 'Whatup', thumbnail: 'thumbnail', created_at: 'today' },
@@ -57,7 +73,7 @@ const Chat = ({ roomId }) => {
       <h1>Chat.js</h1>
       {feed}
       <input type="text" id="chatText" />
-      <button className="firstButton" onClick={handleClick}>
+      <button className="firstButton" id="send" onClick={handleClick}>
         Send
       </button>
     </div>
