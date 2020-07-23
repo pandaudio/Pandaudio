@@ -12,6 +12,7 @@ const CreateNewRoomModal = () => {
 
   const handleClick = () => {
     const userId = Cookies.get('uuid');
+    // room #
     const data = { userId, roomName };
     fetch('/api/v1/rooms', {
       method: 'POST', // or 'PUT'

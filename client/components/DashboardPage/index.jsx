@@ -42,7 +42,10 @@ const DashboardPage = () => {
       .then(function (response) {
         const rooms = [];
         for (let i = 0; i < response.data.length; i += 1) {
-          rooms.push(<RoomOption room={response.data[i]} key={i} />);
+          console.log('The Room Data', response.data[i]);
+          if (response.data[i].active) {
+            rooms.push(<RoomOption room={response.data[i]} key={i} />);
+          }
         }
         setAllRooms(rooms);
       })

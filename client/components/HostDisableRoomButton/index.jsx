@@ -9,9 +9,10 @@ const HostDisableRoomButton = props => {
     e.preventDefault();
     // Disable Room
     // Go Back to DashBoard
-    const data = Cookies.get('uuid');
-    fetch('/api/v1/rooms', {
-      method: 'PUT',
+    const uuid = Cookies.get('uuid');
+    const data = { uuid };
+    fetch('/api/v1/disableroom', {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -19,6 +20,7 @@ const HostDisableRoomButton = props => {
     })
       .then(response => response.json())
       .then(response => {
+        console.log('Room set to inactive');
         history.goBack();
       })
       .catch(error => {
@@ -28,7 +30,7 @@ const HostDisableRoomButton = props => {
 
   return (
     <button type="submit" onClick={handleClick}>
-      Close Room
+      Disable Room
     </button>
   );
 };
