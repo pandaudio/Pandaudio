@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { SONG_QUEUE_ADD } from '../../store/action_types/songQueue';
 
 const SongOption = props => {
   const { roomId, track, artist, length, thumbnail, uri } = props;
+  const dispatch = useDispatch();
 
   function handleClick(e) {
     e.preventDefault();
-
     const data = { roomId, track, artist, length, thumbnail, uri };
     // Functionality to add song
     fetch(`/api/v1/rooms/${roomId}/songs`, {
@@ -17,8 +19,11 @@ const SongOption = props => {
       body: JSON.stringify(data),
     })
       .then(response => response.json())
-      .then(response => {
+      .then(data => {
         console.log('Song Added to Queue!');
+        
+        dispatch({type: SONG_QUEUE_ADD, payload: data})
+        // dispatch response data to redux
       })
       .catch(error => {
         console.error('Error:', error);

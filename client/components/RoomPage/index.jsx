@@ -5,7 +5,8 @@ import PlaybackControls from '../PlaybackControls';
 import SongSearch from '../SongSearch';
 import Chat from '../Chat';
 import axios from 'axios';
-import { useSelector, useStore } from 'react-redux';
+import { useSelector, useStore, useDispatch } from 'react-redux';
+import { SONG_QUEUE_UPDATE } from '../../store/action_types/songQueue';
 
 const socket = io.connect('http://localhost:3000');
 
@@ -32,12 +33,16 @@ const RoomPage = props => {
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-
+  const dispatch = useDispatch();
   const playerState = useSelector(state => state.player);
+  const songQueueState = useSelector(state => state.songQueue);
   // hard coded pokemon song
   const spotify_uri = 'spotify:track:3OIHgTyQdiAGMmpjQaNxp3';
 
   useEffect(() => {
+    // setup fetch data method when component loads intially
+    setup();
+
     // join song room when page is loaded is loaded
     socket.emit('join_room', `song${roomInfo.id}`);
 
@@ -73,6 +78,23 @@ const RoomPage = props => {
       pauseSong(window.globalSpotifyPlayer);
     });
   }, []);
+
+  const setup = () => {
+    // async call to get all songs and dispatch to songQueue store
+
+    console.log('hello')
+
+    fetch(`/api/v1/rooms/${roomInfo.id}/songs`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'appplication/json',
+      }
+    }).then(response => response.json())
+    .then(data => {
+      console.log('grabbed all the songs from db', data)
+      dispatch({type: SONG_QUEUE_UPDATE, payload: data})
+    })
+  }
 
   const getPlayerInfoAndEmit = (player, requestData) => {
     const {
