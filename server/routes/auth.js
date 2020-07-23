@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const passport = require('passport');
+require('dotenv').config();
 
 const authController = require('../controllers/authController.js');
 
@@ -31,7 +32,11 @@ router.get(
     // if successful authentication:
 
     console.log('SUCCESSFUL AUTHENTICATION');
-    res.redirect('/dashboard');
+    if (process.env.NODE_ENV === 'production') {
+      res.redirect(process.env.SPOTIFY_REDIRECT_URL);
+    } else {
+      res.redirect('/dashboard');
+    }
   }
 );
 
