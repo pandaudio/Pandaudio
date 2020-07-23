@@ -6,7 +6,7 @@ const authController = require('../controllers/authController.js');
 router.get(
   '/spotify',
   passport.authenticate('spotify', {
-    scope: ['user-read-email', 'user-read-private'],
+    scope: ['streaming', 'user-read-email', 'user-read-private', 'user-modify-playback-state'],
     showDialog: true,
   }),
   function (req, res) {
