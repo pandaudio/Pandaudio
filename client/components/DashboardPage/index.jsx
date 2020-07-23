@@ -60,11 +60,15 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Home</h1>
-      <button type="submit" onClick={toggleOpen}>
-        Create Room
-      </button>
+    <div className="dashboard-page">
+      <div className="page-header">
+        <h1>Pandaudio</h1>
+      </div>
+      <div className="create-room">
+        <button type="submit" onClick={toggleOpen}>
+          Create Room
+        </button>
+      </div>
       <Modal open={open} onClose={toggleOpen} className={classes.modal}>
         <div className={classes.paper}>
           <CreateNewRoomModal />
