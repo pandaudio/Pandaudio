@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import Axios from 'axios';
 
-const socket = io.connect('http://localhost:3000');
+const URL = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000';
+const socket = io.connect(URL);
 
 const Chat = ({ roomId }) => {
   const uuid = Cookies.get('uuid');
