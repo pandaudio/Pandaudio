@@ -9,16 +9,16 @@ const HostDisableRoomButton = props => {
     e.preventDefault();
     // Disable Room
     // Go Back to DashBoard
-    const uuid = Cookies.get('uuid');
-    const data = { uuid };
-    fetch('/api/v1/disableroom', {
-      method: 'POST',
+    const host = Cookies.get('uuid');
+    const roomId = props.roomId;
+    const data = { host, roomId };
+    fetch('/api/v1/rooms', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     })
-      .then(response => response.json())
       .then(response => {
         console.log('Room set to inactive');
         history.goBack();

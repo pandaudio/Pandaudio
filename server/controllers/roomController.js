@@ -47,10 +47,9 @@ roomController.makeActive = async (req, res, next) => {
  */
 roomController.makeInactive = async (req, res, next) => {
   try {
-    // const roomId = req.body.uuid;
-    const { roomId, host } = req.body; // host = uuid
-    query = 'UPDATE rooms SET active = False WHERE uuid = $1'; // host //id
-    const values = [roomId];
+    const { host, roomId } = req.body;
+    query = 'UPDATE rooms SET active = False WHERE host = $1 AND id = $2';
+    const values = [host, roomId];
     await db.query(query, values);
     return next();
   } catch ({ message }) {

@@ -22,7 +22,7 @@ router.get('/rooms', roomController.getAllActive, (req, res) => {
 });
 
 // set room to inactive
-router.post('/disableroom', roomController.makeInactive, (req, res) => {
+router.put('/rooms', roomController.makeInactive, (req, res) => {
   res.sendStatus(200);
 });
 

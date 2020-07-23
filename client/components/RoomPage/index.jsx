@@ -174,7 +174,7 @@ const RoomPage = props => {
           <button type="submit" onClick={toggleOpen}>
             Add Song
           </button>
-          <HostDisableRoomButton />
+          <HostDisableRoomButton roomId={location.state.roomInfo.id} />
           <Modal open={open} onClose={toggleOpen} className={classes.modal}>
             <div className={classes.paper}>
               <SongSearch roomId={location.state.roomInfo.id} />
