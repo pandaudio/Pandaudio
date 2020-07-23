@@ -1,0 +1,37 @@
+.room-page {
+  font-family: Arial, Helvetica, sans-serif;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(120, 212, 218);
+  padding: 10%;
+  vertical-align: middle;
+}
+
+.addsong-container {
+  background-color: cadetblue;
+  margin: auto;
+}
+
+.song-info-container {
+  background-color: cornflowerblue;
+  margin: auto;
+}
+
+.playback-control-container {
+  background-color: darkgreen;
+  margin: auto;
+}
+
+.chat-container {
+  background-color: darkgrey;
+}
+
+.room-name-box {
+  font-size: xx-large;
+  background-color: darksalmon;
+}
+
+.btn-addsong {
+  background-color: darkkhaki;
+}

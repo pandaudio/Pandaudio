@@ -29,7 +29,7 @@ const App = () => {
   const checkForPlayer = () => {
     if (window.Spotify !== null) {
       clearInterval(playerCheckInterval);
-      
+
       // create the spotify player
       const newPlayer = new window.Spotify.Player({
         name: 'Music Zoom Player',
@@ -48,7 +48,7 @@ const App = () => {
       // Playback status updates
       newPlayer.addListener('player_state_changed', state => {
         // store in player store
-        dispatch({type: PLAYER_STATE_UPDATE, payload: state})
+        dispatch({ type: PLAYER_STATE_UPDATE, payload: state })
       });
 
       // intialize the player connection immediatley after intializing
@@ -58,7 +58,7 @@ const App = () => {
       // dispatch({ type: PLAYER_INITIALIZE, payload: newPlayer });
 
       // flag in player store that it's ready
-      dispatch({type: PLAYER_READY_UPDATE, payload: true})
+      dispatch({ type: PLAYER_READY_UPDATE, payload: true })
 
       // store player reference in the window
       window.globalSpotifyPlayer = newPlayer;
