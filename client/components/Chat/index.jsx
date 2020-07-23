@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import Axios from 'axios';
+import './index.css';
 
 const URL = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000';
 const socket = io.connect(URL);
@@ -17,7 +18,7 @@ const Chat = ({ roomId }) => {
     Axios.get(`/api/v1/rooms/${roomId}/chat`)
       .then(response => {
         console.log('this is the chat response:   ', response.data);
-        for (let i = response.data.length - 1; i >= 0; i--) {
+        for (let i = 0; i < response.data.length; i++) {
           feed.push(
             <div key={i}>
               <p>
@@ -64,7 +65,7 @@ const Chat = ({ roomId }) => {
     // console.log('Incoming message: ', data);
     // console.log('this is what comments looks like: ', comments);
     addComment(
-      comments.concat([
+      [
         <div key={data.created_at}>
           <p>
             <img src={data.thumbnail} />
@@ -73,14 +74,14 @@ const Chat = ({ roomId }) => {
             <span> {new Date().toLocaleTimeString()}</span>
           </p>
         </div>,
-      ])
+      ].concat(comments)
     );
   });
 
   return (
-    <div>
+    <div className="chatBox">
       <h1>Chat.js</h1>
-      {comments}
+      <div className="chatFeed">{comments}</div>
       <input type="text" id="chatText" />
       <button className="firstButton" id="send" onClick={handleClick}>
         Send
