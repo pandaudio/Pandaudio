@@ -60,6 +60,12 @@ io.on('connection', socket => {
       message: data.message,
     });
   });
+
+  socket.on('play', async data => {
+    console.log('Getting play from room', data);
+
+    io.to(data.room).emit('play', data);
+  })
 });
 
 /**
