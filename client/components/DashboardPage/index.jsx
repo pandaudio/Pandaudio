@@ -4,6 +4,7 @@ import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CreateNewRoomModal from '../CreateNewRoomModal';
 import RoomOption from '../RoomOption';
+import './index.css';
 /**
  * render component: CreateRoom Modal
  * render: button create room name
@@ -42,7 +43,7 @@ const DashboardPage = () => {
       .then(function (response) {
         const rooms = [];
         for (let i = 0; i < response.data.length; i += 1) {
-          rooms.push(<RoomOption room={response.data[i]} key={i} />);
+          rooms.push(<div className="dashboard-box"><RoomOption room={response.data[i]} key={i} /></div>);
         }
         setAllRooms(rooms);
       })
@@ -52,7 +53,7 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div>
+    <div >
       <h1>Home</h1>
       <button type="submit" onClick={toggleOpen}>
         Create Room
@@ -62,7 +63,9 @@ const DashboardPage = () => {
           <CreateNewRoomModal />
         </div>
       </Modal>
-      {allRooms}
+      <div className="dashboard-container" >
+        {allRooms}
+      </div>
     </div>
   );
 };
