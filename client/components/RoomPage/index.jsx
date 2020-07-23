@@ -4,6 +4,7 @@ import SongSearch from '../SongSearch';
 
 const RoomPage = props => {
   const { location } = props;
+  console.log(location)
   return (
     <div>
       {location.state.isHost ? <SongSearch roomId={location.state.roomInfo.id} /> : null}
