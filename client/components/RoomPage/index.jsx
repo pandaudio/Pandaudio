@@ -188,7 +188,7 @@ const RoomPage = props => {
         {/* {location.state.roomInfo.id} */}
       <h2>{roomInfo.room_name}</h2>
       <p>{`Host: ${roomInfo.host}`}</p>
-      <p>{`Uptime: ${roomInfo.created_at}`}</p>
+      <p>{`Uptime: ${Math.floor(moment.duration(moment(roomInfo.created_at,'HH:mm:ss').diff(moment())).asMinutes())} minutes`}</p>
       </div>
       {isHost && playerState.ready ? (
         <div className="playback-control-container">
