@@ -13,6 +13,8 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
+const db = require('./models/roomModels');
+
 const authRoute = require('./routes/auth');
 const apiRoute = require('./routes/api');
 
@@ -38,9 +40,25 @@ io.on('connection', socket => {
     console.log('User joined room:   ', room);
   });
 
-  socket.on('chat', data => {
+  socket.on('chat', async data => {
     console.log('Getting chat from room', data);
-    io.to(data.room).emit('chat', data.message);
+    // Query to get user thumbnail and username to send back to the chat room
+    let query = `
+      SELECT username, thumbnail FROM users
+      WHERE id = '${data.uuid}'`;
+    const result = await db.query(query);
+    console.log('This is the user data:   ', result.rows);
+
+    // Save data to appropriate chat table
+    query = `INSERT INTO ${data.room} (content, owner) VALUES ('${data.message}', '${data.uuid}')`;
+    db.query(query);
+
+    // Emit the appropriate data back to the chat room
+    io.to(data.room).emit('chat', {
+      username: result.rows[0].username,
+      thumbnail: result.rows[0].thumbnail,
+      message: data.message,
+    });
   });
 });
 
