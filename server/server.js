@@ -43,11 +43,16 @@ io.on('connection', socket => {
   socket.on('chat', async data => {
     console.log('Getting chat from room', data);
     // Query to get user thumbnail and username to send back to the chat room
-    const query = `
+    let query = `
       SELECT username, thumbnail FROM users
       WHERE id = '${data.uuid}'`;
     const result = await db.query(query);
     console.log('This is the user data:   ', result.rows);
+
+    // Save data to appropriate chat table
+    query = `INSERT INTO ${data.room} (content, owner) VALUES ('${data.message}', '${data.uuid}')`;
+    db.query(query);
+
     // Emit the appropriate data back to the chat room
     io.to(data.room).emit('chat', {
       username: result.rows[0].username,
