@@ -7,7 +7,8 @@ import Chat from '../Chat';
 import axios from 'axios';
 import { useSelector, useStore } from 'react-redux';
 
-const socket = io.connect('http://localhost:3000');
+const URL = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000';
+const socket = io.connect(URL);
 
 const useStyles = makeStyles(theme => ({
   modal: {
