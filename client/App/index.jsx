@@ -29,12 +29,8 @@ const App = () => {
   const checkForPlayer = () => {
     if (window.Spotify !== null) {
       clearInterval(playerCheckInterval);
-<<<<<<< HEAD
       
       // create the spotify player
-=======
-      console.log(accessToken);
->>>>>>> master
       const newPlayer = new window.Spotify.Player({
         name: 'Music Zoom Player',
         getOAuthToken: cb => {
