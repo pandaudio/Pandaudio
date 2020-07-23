@@ -7,7 +7,7 @@ import DashboardPage from '../components/DashboardPage';
 // import { PrivateRoute } from './PrivateRoute';
 import Cookies from 'js-cookie';
 
-import { PLAYER_UPDATE } from '../store/action_types/player';
+import { PLAYER_STATE_UPDATE, PLAYER_READY_UPDATE } from '../store/action_types/player';
 import { useDispatch } from 'react-redux';
 
 const App = () => {
@@ -48,7 +48,7 @@ const App = () => {
       // Playback status updates
       newPlayer.addListener('player_state_changed', state => {
         // store in player store
-        dispatch({type: PLAYER_UPDATE, payload: state})
+        dispatch({type: PLAYER_STATE_UPDATE, payload: state})
       });
 
       // intialize the player connection immediatley after intializing
@@ -56,6 +56,9 @@ const App = () => {
 
       // NOTE: This is for storing the player in the Store in case window strategy doesn't work
       // dispatch({ type: PLAYER_INITIALIZE, payload: newPlayer });
+
+      // flag in player store that it's ready
+      dispatch({type: PLAYER_READY_UPDATE, payload: true})
 
       // store player reference in the window
       window.globalSpotifyPlayer = newPlayer;

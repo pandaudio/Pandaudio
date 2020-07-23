@@ -15,13 +15,10 @@ const RoomPage = props => {
   } = props;
 
   const playerState = useSelector(state => state.player);
-
-  let player = null;
+  // hard coded pokemon song
   const spotify_uri = 'spotify:track:3OIHgTyQdiAGMmpjQaNxp3';
 
   useEffect(() => {
-    player = window.globalSpotifyPlayer;
-
     // join song room when page is loaded is loaded
     socket.emit('join_room', `song${roomInfo.id}`);
 
@@ -37,7 +34,7 @@ const RoomPage = props => {
       socket.on('requestPlayInfo', data => {
         // emit a special play message back to ONLY that guest requester
         console.log('host receive requests for play Info', data);
-        getPlayerInfoAndEmit(player, data);
+        getPlayerInfoAndEmit(window.globalSpotifyPlayer, data);
       });
     }
 
@@ -47,14 +44,14 @@ const RoomPage = props => {
 
       //only play song if the targetGuest is my own socket.id or if its falsy (broadcast to everyone to play)
       if (data.targetGuest === socket.id || !data.targetGuest) {
-        playSong(player, data.spotify_uri, data.start_time);
+        playSong(window.globalSpotifyPlayer, data.spotify_uri, data.start_time);
       }
     });
 
     // add listener of websocket to pause a song
     socket.on('pause', data => {
       console.log('Incoming message: ', data);
-      pauseSong(player);
+      pauseSong(window.globalSpotifyPlayer);
     });
   }, []);
 
@@ -134,7 +131,7 @@ const RoomPage = props => {
     socket.emit('play', {
       room: `song${roomInfo.id}`,
       spotify_uri,
-      start_time: playerState.position || 0,
+      start_time: playerState.data.position || 0,
     });
   };
 
@@ -157,7 +154,7 @@ const RoomPage = props => {
       {roomInfo.active ? 'active' : 'inactive'}
       <br />
       {roomInfo.created_at}
-      {isHost ? (
+      {isHost && playerState.ready ? (
         <PlaybackControls
           playSong={() => {
             handlePlay();
