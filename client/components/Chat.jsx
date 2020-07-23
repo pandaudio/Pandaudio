@@ -42,9 +42,9 @@ const Chat = props => {
     addComment(
       comments.concat([
         {
-          username: uuid,
-          text: data,
-          thumbnail: 'thumbnail',
+          username: data.username,
+          text: data.message,
+          thumbnail: data.thumbnail,
           created_at: new Date().toLocaleTimeString(),
         },
       ])
