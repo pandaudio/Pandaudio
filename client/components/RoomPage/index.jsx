@@ -7,7 +7,7 @@ const RoomPage = props => {
   console.log(location)
   return (
     <div>
-      {location.state.isHost ? <SongSearch /> : null}
+      {location.state.isHost ? <SongSearch roomId={location.state.roomInfo.id} /> : null}
       {location.state.roomInfo.id}
       <br />
       {location.state.roomInfo.room_name}

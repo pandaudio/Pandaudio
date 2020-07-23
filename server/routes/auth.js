@@ -22,13 +22,13 @@ router.get('/fail', (req, res) => {
 router.get(
   '/spotify/callback',
   passport.authenticate('spotify', {
-    //if failure to authenticate:
-    //placeholder
+    // if failure to authenticate:
+    // placeholder
     failureRedirect: '/fail',
   }),
   authController.saveAccessToken,
   (req, res) => {
-    //if successful authentication:
+    // if successful authentication:
 
     console.log('SUCCESSFUL AUTHENTICATION');
     res.redirect('/dashboard');
