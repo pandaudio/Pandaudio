@@ -19,38 +19,18 @@ const Chat = ({ roomId }) => {
       .then(response => {
         console.log('this is the chat response:   ', response.data);
         for (let i = response.data.length - 1; i >= 0; i--) {
-          addComment(
-            comments.push({
-              username: response.data[i].username,
-              text: response.data[i].content,
-              thumbnail: response.data[i].thumbnail,
-              created_at: response.data[i].created_at,
-            })
-          );
-        }
-        // response.data.forEach(data => {
-        //   addComment(
-        //     comments.push({
-        //       username: data.username,
-        //       text: data.content,
-        //       thumbnail: data.thumbnail,
-        //       created_at: data.created_at,
-        //     })
-        //   );
-        // console.log('this is what your comments on mount looks like   ', comments);
-        // });
-        for (let i = 0; i < comments.length; i++) {
           feed.push(
             <div key={i}>
               <p>
-                <img src={comments[i].thumbnail} />
-                <span>{comments[i].username}:</span>
-                {comments[i].text}
-                <span> {comments[i].created_at}</span>
+                <img src={response.data[i].thumbnail} />
+                <span>{response.data[i].username}:</span>
+                {response.data[i].content}
+                <span> {response.data[i].created_at}</span>
               </p>
             </div>
           );
         }
+        addComment(feed);
       })
       .catch(error => {
         console.log(error);
@@ -64,21 +44,9 @@ const Chat = ({ roomId }) => {
       }
     });
 
+    // Join socket when component mounts
     socket.emit('join_room', `chat${roomId}`);
   }, []);
-
-  for (let i = 0; i < comments.length; i++) {
-    feed.push(
-      <div key={i}>
-        <p>
-          <img src={comments[i].thumbnail} />
-          <span>{comments[i].username}:</span>
-          {comments[i].text}
-          <span> {comments[i].created_at}</span>
-        </p>
-      </div>
-    );
-  }
 
   const handleClick = () => {
     const currentMessage = document.getElementById('chatText').value;
@@ -96,19 +64,27 @@ const Chat = ({ roomId }) => {
     console.log('this is what comments looks like: ', comments);
     addComment(
       comments.concat([
-        {
-          username: data.username,
-          text: data.message,
-          thumbnail: data.thumbnail,
-          created_at: new Date().toLocaleTimeString(),
-        },
+        <div key={data.created_at}>
+          <p>
+            <img src={data.thumbnail} />
+            <span>{data.username}:</span>
+            {data.message}
+            <span> {new Date().toLocaleTimeString()}</span>
+          </p>
+        </div>,
+        // {
+        //   username: data.username,
+        //   text: data.message,
+        //   thumbnail: data.thumbnail,
+        //   created_at: new Date().toLocaleTimeString(),
+        // },
       ])
     );
   });
   return (
     <div>
       <h1>Chat.js</h1>
-      {feed}
+      {comments}
       <input type="text" id="chatText" />
       <button className="firstButton" id="send" onClick={handleClick}>
         Send
