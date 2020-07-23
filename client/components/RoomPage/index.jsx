@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Modal } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import PlaybackControls from '../PlaybackControls';
 import SongSearch from '../SongSearch';
 import Chat from '../Chat';
@@ -7,12 +9,29 @@ import { useSelector, useStore } from 'react-redux';
 
 const socket = io.connect('http://localhost:3000');
 
+const useStyles = makeStyles(theme => ({
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 const RoomPage = props => {
   const {
     location: {
       state: { isHost, roomInfo },
     },
   } = props;
+
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   const playerState = useSelector(state => state.player);
   // hard coded pokemon song
@@ -141,11 +160,27 @@ const RoomPage = props => {
     });
   };
 
-  // console.log('you entered the location:   ', location);
+  const toggleOpen = e => {
+    e.preventDefault();
+    setOpen(!open);
+  };
+
+  const { location } = props;
   return (
     <div>
-      {isHost ? <SongSearch roomId={roomInfo.id} /> : null}
-      {roomInfo.id}
+      {location.state.isHost ? (
+        <div>
+          <button type="submit" onClick={toggleOpen}>
+            Add Song
+          </button>
+          <Modal open={open} onClose={toggleOpen} className={classes.modal}>
+            <div className={classes.paper}>
+              <SongSearch roomId={location.state.roomInfo.id} />
+            </div>
+          </Modal>
+        </div>
+      ) : null}
+      {location.state.roomInfo.id}
       <br />
       {roomInfo.room_name}
       <br />

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import { useHistory } from 'react-router-dom';
 
-const CreateNewRoomModal = props => {
+const CreateNewRoomModal = () => {
   const [roomName, setRoomName] = useState('');
   const history = useHistory();
 
@@ -41,9 +41,6 @@ const CreateNewRoomModal = props => {
         <input type="text" id="create-room" onChange={handleChange} />
         <button type="submit" onClick={handleClick}>
           Create
-        </button>
-        <button type="submit" onClick={() => props.setShowCreateNewRoomModal(false)}>
-          Close
         </button>
       </section>
     </div>
