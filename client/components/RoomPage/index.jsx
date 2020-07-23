@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector, useStore } from 'react-redux';
 import PlaybackControls from '../PlaybackControls';
 import SongSearch from '../SongSearch';
-import HostDisableRoomButton from '../HostDisableRoomButton';
 import Chat from '../Chat';
-import './index.css';
+import axios from 'axios';
+import { useSelector, useStore, useDispatch } from 'react-redux';
+import { SONG_QUEUE_UPDATE } from '../../store/action_types/songQueue';
+import './index.css'
 
 const URL = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000';
 const socket = io.connect(URL);
@@ -34,12 +35,18 @@ const RoomPage = props => {
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-
+  const [songQueueReady, setSongQueueReady] = useState(false);
+  const [initialPlay, setInitialPlay] = useState(false);
+  const dispatch = useDispatch();
+  const store = useStore();
   const playerState = useSelector(state => state.player);
+  const songQueueState = useSelector(state => state.songQueue);
   // hard coded pokemon song
-  const spotify_uri = 'spotify:track:3OIHgTyQdiAGMmpjQaNxp3';
 
   useEffect(() => {
+    // setup fetch data method when component loads intially
+    setup();
+
     // join song room when page is loaded is loaded
     socket.emit('join_room', `song${roomInfo.id}`);
 
@@ -63,9 +70,9 @@ const RoomPage = props => {
     socket.on('play', data => {
       console.log('Incoming play message: ', data);
 
-      // only play song if the targetGuest is my own socket.id or if its falsy (broadcast to everyone to play)
+      //only play song if the targetGuest is my own socket.id or if its falsy (broadcast to everyone to play)
       if (data.targetGuest === socket.id || !data.targetGuest) {
-        playSong(window.globalSpotifyPlayer, data.spotify_uri, data.start_time);
+        playSong(window.globalSpotifyPlayer, data.spotify_uris, data.start_time);
       }
     });
 
@@ -74,7 +81,25 @@ const RoomPage = props => {
       console.log('Incoming message: ', data);
       pauseSong(window.globalSpotifyPlayer);
     });
+
+
   }, []);
+
+  const setup = () => {
+    // async call to get all songs and dispatch to songQueue store
+
+    fetch(`/api/v1/rooms/${roomInfo.id}/songs`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'appplication/json',
+      }
+    }).then(response => response.json())
+    .then(data => {
+      console.log('grabbed all the songs from db', data)
+      dispatch({type: SONG_QUEUE_UPDATE, payload: data});
+      setSongQueueReady(true);
+    })
+  }
 
   const getPlayerInfoAndEmit = (player, requestData) => {
     const {
@@ -96,9 +121,14 @@ const RoomPage = props => {
             progress_ms,
           } = playerInfo;
 
+          const trackWindow = store.getState().player.data.track_window;
+          const currentTrack = trackWindow.current_track;
+          const nextTracks = trackWindow.next_tracks;
+          const tracks = [currentTrack, ...nextTracks]
+
           socket.emit('play', {
             room: `song${roomInfo.id}`,
-            spotify_uri: uri,
+            spotify_uris: tracks.map(track => track.uri),
             start_time: progress_ms,
             targetGuest: requestData.targetGuest,
           });
@@ -107,10 +137,10 @@ const RoomPage = props => {
   };
 
   // helper to play a song
-  const playSong = (player, spotify_uri, start_time) => {
+  const playSong = (player, spotify_uris, start_time) => {
     // function to play song from spotify API
     const play = ({
-      spotify_uri,
+      spotify_uris,
       playerInstance: {
         _options: { getOAuthToken, id },
       },
@@ -118,10 +148,10 @@ const RoomPage = props => {
     }) => {
       getOAuthToken(access_token => {
         console.log('we are in the get oauth', access_token, id);
-        console.log('this is the spotify uri', spotify_uri);
+        console.log('this is the spotify uri', spotify_uris);
         fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
           method: 'PUT',
-          body: JSON.stringify({ uris: [spotify_uri], position_ms: start_time }),
+          body: JSON.stringify({ uris: spotify_uris, position_ms: start_time }),
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${access_token}`,
@@ -134,7 +164,7 @@ const RoomPage = props => {
 
     play({
       playerInstance: player,
-      spotify_uri,
+      spotify_uris,
       start_time,
     });
   };
@@ -146,12 +176,24 @@ const RoomPage = props => {
   };
 
   const handlePlay = e => {
-    // **** TODO: Pass in dynamic URI from the queue ****
-    // **** TODO: Pass song name, album image, etc ****
+    let uris;
+
+    if (!initialPlay) {
+      uris = songQueueState.data.map(song => song.uri);
+      setInitialPlay(true);
+      
+    } else {
+      const trackWindow = store.getState().player.data.track_window;
+      const currentTrack = trackWindow.current_track;
+      const nextTracks = trackWindow.next_tracks;
+      const tracks = [currentTrack, ...nextTracks];
+
+      uris = tracks.map(track => track.uri);
+    }
 
     socket.emit('play', {
       room: `song${roomInfo.id}`,
-      spotify_uri,
+      spotify_uris: uris,
       start_time: playerState.data.position || 0,
     });
   };
@@ -175,7 +217,6 @@ const RoomPage = props => {
           <button className="btn-addsong" type="submit" onClick={toggleOpen}>
             Add Song
           </button>
-          <HostDisableRoomButton roomId={location.state.roomInfo.id} />
           <Modal open={open} onClose={toggleOpen} className={classes.modal}>
             <div className={classes.paper}>
               <SongSearch roomId={location.state.roomInfo.id} />
@@ -186,7 +227,9 @@ const RoomPage = props => {
       <div className="song-info-container">
         {location.state.roomInfo.id}
         <br />
-        <div className="room-name-box">{roomInfo.room_name}</div>
+        <div className="room-name-box">
+          {roomInfo.room_name}
+        </div>
         <br />
         {roomInfo.host}
         <br />
@@ -194,7 +237,7 @@ const RoomPage = props => {
         <br />
         {roomInfo.created_at}
       </div>
-      {isHost && playerState.ready ? (
+      {isHost && playerState.ready && songQueueReady ? (
         <div className="playback-control-container">
           <PlaybackControls
             playSong={() => {
