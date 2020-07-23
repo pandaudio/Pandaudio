@@ -4,18 +4,10 @@ import SongSearch from '../SongSearch';
 
 const RoomPage = props => {
   const { location } = props;
-  console.log(location)
-
-  // initialize a isHost state to be false by default
-  const [isHost, setIsHost] = useState(false);
 
   let player = null;
 
   useEffect(() => {
-
-    // check if user is host, then set isHost State to true
-    console.log(props.location.roomInfo)
-
     player = window.globalSpotifyPlayer;
 
     // example spotify URI
@@ -74,6 +66,12 @@ const RoomPage = props => {
     });
   }
 
+  const pauseSong = (player) => {
+    player.pause().then(() => {
+      console.log('Paused!');
+    });
+  }
+
 
   return (
     <div>
@@ -87,7 +85,7 @@ const RoomPage = props => {
       {location.state.roomInfo.active ? 'active' : 'inactive'}
       <br />
       {location.state.roomInfo.created_at}
-      {location.state.isHost ? <PlaybackControls /> : null}
+      {location.state.isHost ? <PlaybackControls playSong={() => {playSong(player)}} pauseSong={() => {pauseSong(player)}}/> : null}
     </div>
   );
 };
