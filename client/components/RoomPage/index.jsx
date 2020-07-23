@@ -37,6 +37,10 @@ const RoomPage = props => {
     })
 
     // add listener of websocket to pause a song
+    socket.on('pause', data => {
+      console.log('Incoming message: ', data);
+      pauseSong(player)
+    })
   }, []);
 
   // post message to websocket asking for the current song URI and time
@@ -93,7 +97,13 @@ const RoomPage = props => {
       start_time: 0,
     });
   }
-  
+
+  const handlePause = (e) => {
+    socket.emit('pause', {
+      room: `song${roomInfo.id}`
+    })
+  }
+
   // console.log('you entered the location:   ', location);
   return (
     <div>
@@ -113,7 +123,7 @@ const RoomPage = props => {
             handlePlay();
           }}
           pauseSong={() => {
-            pauseSong(player);
+            handlePause();
           }}
         />
       ) : null}
