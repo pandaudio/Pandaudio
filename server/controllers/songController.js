@@ -38,6 +38,29 @@ songController.createTable = async (req, res, next) => {
   }
 };
 
+songController.getAll = async (req, res, next) => {
+
+  const { roomId } = req.params;
+
+  try {
+    const query = `
+      SELECT * from songs${roomId}
+    `;
+
+    const results = await db.query(query);
+
+    res.locals.roomSongs = results.rows;
+
+    return next();
+    
+  } catch({ message }) {
+    return next({
+      log: 'Error in songController.getAll',
+      message,
+    })
+  }
+}
+
 /**
  * Insert a new entry for a song added to the room-songs table
  * @requires  roomId {string} UUID provided in request params

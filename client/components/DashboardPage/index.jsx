@@ -43,7 +43,14 @@ const DashboardPage = () => {
       .then(function (response) {
         const rooms = [];
         for (let i = 0; i < response.data.length; i += 1) {
-          rooms.push(<div className="dashboard-box"><RoomOption room={response.data[i]} key={i} /></div>);
+          console.log('The Room Data', response.data[i]);
+          if (response.data[i].active) {
+            rooms.push(
+              <div className="dashboard-box">
+                <RoomOption room={response.data[i]} key={i} />
+              </div>
+            );
+          }
         }
         setAllRooms(rooms);
       })
@@ -53,19 +60,21 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div >
-      <h1>Home</h1>
-      <button type="submit" onClick={toggleOpen}>
-        Create Room
-      </button>
+    <div className="dashboard-page">
+      <div className="page-header">
+        <h1>Pandaudio</h1>
+      </div>
+      <div className="create-room">
+        <button type="submit" onClick={toggleOpen}>
+          Create Room
+        </button>
+      </div>
       <Modal open={open} onClose={toggleOpen} className={classes.modal}>
         <div className={classes.paper}>
           <CreateNewRoomModal />
         </div>
       </Modal>
-      <div className="dashboard-container" >
-        {allRooms}
-      </div>
+      <div className="dashboard-container">{allRooms}</div>
     </div>
   );
 };
