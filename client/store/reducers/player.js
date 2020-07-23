@@ -1,15 +1,14 @@
-import { PLAYER_INITIALIZE } from '../action_types/player'
+import { PLAYER_UPDATE } from '../action_types/player'
 
 const DEFAULT_STATE = {
-  player: null
 }
 
 export default (state = DEFAULT_STATE, action) => {
   switch(action.type) {
-    case PLAYER_INITIALIZE:
+    case PLAYER_UPDATE:
       return {
         ...state,
-        player: action.payload
+        ...action.payload,
       }
     default:
       return state;
