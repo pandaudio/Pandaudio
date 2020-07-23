@@ -6,6 +6,7 @@ import DashboardPage from '../components/DashboardPage';
 // import { PrivateRoute } from './PrivateRoute';
 import Chat from '../components/Chat.jsx';
 import TestChat from '../components/TestChat.jsx';
+import Cookies from 'js-cookie'
 
 import { PLAYER_INITIALIZE } from '../store/action_types/player';
 import { useDispatch } from 'react-redux';
@@ -13,7 +14,7 @@ import { useDispatch } from 'react-redux';
 const App = () => {
   // NOTE: This is for storing the player in the Store in case window strategy doesn't work
   // const dispatch = useDispatch();
-  const [token, setToken] = useState(null);
+  const accessToken = Cookies.get('accessToken');
 
   let playerCheckInterval = null;
 
@@ -26,10 +27,11 @@ const App = () => {
   const checkForPlayer = () => {
     if (window.Spotify !== null) {
       clearInterval(playerCheckInterval);
+      console.log(accessToken)
       const newPlayer = new window.Spotify.Player({
         name: 'Music Zoom Player',
         getOAuthToken: cb => {
-          cb(token);
+          cb(accessToken);
         },
       });
 
@@ -37,7 +39,7 @@ const App = () => {
       // dispatch({ type: PLAYER_INITIALIZE, payload: newPlayer });
 
       // store player reference in the window
-      window.globalPlayer = newPlayer;
+      window.globalSpotifyPlayer = newPlayer;
     }
   };
 
