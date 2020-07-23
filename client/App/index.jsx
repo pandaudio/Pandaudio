@@ -15,6 +15,7 @@ const App = () => {
   // NOTE: This is for storing the player in the Store in case window strategy doesn't work
   // const dispatch = useDispatch();
   const accessToken = Cookies.get('accessToken');
+  const [deviceId, setDeviceId] = useState("");
 
   let playerCheckInterval = null;
 
@@ -24,16 +25,29 @@ const App = () => {
     }, 1000);
   }, []);
 
+
+  // checks for if Spotify is accessible then creates a new player
   const checkForPlayer = () => {
     if (window.Spotify !== null) {
       clearInterval(playerCheckInterval);
-      console.log(accessToken)
+      
+      // create the spotify player
       const newPlayer = new window.Spotify.Player({
         name: 'Music Zoom Player',
         getOAuthToken: cb => {
           cb(accessToken);
         },
+        volume: 0.1
       });
+      // create event handlers
+      newPlayer.addListener('ready', data => {
+        let { device_id } = data;
+        console.log("Let the music play on!");
+        setDeviceId(device_id);
+      });
+
+      // intialize the player connection immediatley after intializing
+      newPlayer.connect();
 
       // NOTE: This is for storing the player in the Store in case window strategy doesn't work
       // dispatch({ type: PLAYER_INITIALIZE, payload: newPlayer });
