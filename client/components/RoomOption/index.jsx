@@ -1,15 +1,21 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const RoomOption = props => {
   const history = useHistory();
   const { room } = props;
+  const uuid = Cookies.get('uuid');
 
   function handleClick(e) {
+    const {
+      room: { host },
+    } = props;
+
     e.preventDefault();
     history.push({
       pathname: '/room',
-      state: { isHost: false, roomInfo: room },
+      state: { isHost: host === uuid ? true : false, roomInfo: room },
     });
   }
 

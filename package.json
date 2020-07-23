@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/pandaudio/Pandaudio#readme",
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
     "axios": "^0.19.2",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
