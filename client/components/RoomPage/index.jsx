@@ -5,9 +5,10 @@ import PlaybackControls from '../PlaybackControls';
 import SongSearch from '../SongSearch';
 import Chat from '../Chat';
 import axios from 'axios';
+import moment from 'moment';
 import { useSelector, useStore, useDispatch } from 'react-redux';
 import { SONG_QUEUE_UPDATE } from '../../store/action_types/songQueue';
-import './index.css'
+import './index.scss'
 
 const URL = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000';
 const socket = io.connect(URL);
@@ -212,6 +213,7 @@ const RoomPage = props => {
   const { location } = props;
   return (
     <div className="room-page">
+      <div className="room-content">
       {location.state.isHost ? (
         <div className="addsong-container">
           <button className="btn-addsong" type="submit" onClick={toggleOpen}>
@@ -224,18 +226,11 @@ const RoomPage = props => {
           </Modal>
         </div>
       ) : null}
-      <div className="song-info-container">
-        {location.state.roomInfo.id}
-        <br />
-        <div className="room-name-box">
-          {roomInfo.room_name}
-        </div>
-        <br />
-        {roomInfo.host}
-        <br />
-        {roomInfo.active ? 'active' : 'inactive'}
-        <br />
-        {roomInfo.created_at}
+      <div className="room-header">
+        {/* {location.state.roomInfo.id} */}
+      <h2>{roomInfo.room_name}</h2>
+      <p>{`Host: ${roomInfo.host}`}</p>
+      <p>{`Uptime: ${Math.floor(moment.duration(moment(roomInfo.created_at,'HH:mm:ss').diff(moment())).asMinutes())} minutes`}</p>
       </div>
       {isHost && playerState.ready && songQueueReady ? (
         <div className="playback-control-container">
@@ -249,7 +244,8 @@ const RoomPage = props => {
           />
         </div>
       ) : null}
-      <div className="chat-container">
+      </div>
+      <div className="room-chat">
         <Chat roomId={roomInfo.id} />
       </div>
     </div>
