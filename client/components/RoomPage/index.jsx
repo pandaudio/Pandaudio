@@ -171,7 +171,7 @@ const RoomPage = props => {
     <div className="room-page">
       {location.state.isHost ? (
         <div className="addsong-container">
-          <button type="submit" onClick={toggleOpen}>
+          <button className="btn-addsong" type="submit" onClick={toggleOpen}>
             Add Song
           </button>
           <Modal open={open} onClose={toggleOpen} className={classes.modal}>
@@ -184,7 +184,9 @@ const RoomPage = props => {
       <div className="song-info-container">
         {location.state.roomInfo.id}
         <br />
-        {roomInfo.room_name}
+        <div className="room-name-box">
+          {roomInfo.room_name}
+        </div>
         <br />
         {roomInfo.host}
         <br />
