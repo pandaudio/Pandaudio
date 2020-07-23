@@ -6,7 +6,7 @@ const RoomPage = props => {
   const { location } = props;
   return (
     <div>
-      {location.state.isHost ? <SongSearch /> : null}
+      {location.state.isHost ? <SongSearch roomId={location.state.roomInfo.id} /> : null}
       {location.state.roomInfo.id}
       <br />
       {location.state.roomInfo.room_name}

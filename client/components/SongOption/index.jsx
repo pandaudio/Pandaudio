@@ -17,7 +17,29 @@ const SongOption = props => {
 
   function handleClick(e) {
     e.preventDefault();
+
+    const data = { roomId, track, artist, length, thumbnail, uri };
     // Functionality to add song
+    fetch(`/api/v1/rooms/${roomId}/songs`, {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log('Song Added to Queue!');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    /*
+    // post song to queue
+    router.post('/rooms/:roomId/songs', songController.addSong, (req, res) => {
+    res.status(200).json(res.locals.addedSong);
+    });
+    */
   }
 
   return (

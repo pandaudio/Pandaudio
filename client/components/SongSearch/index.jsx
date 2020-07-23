@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import SongOption from '../SongOption';
 
-const SongSearch = () => {
+const SongSearch = props => {
   const [songName, setSongName] = useState('');
   const [songResults, setSongResults] = useState([]);
 
   // useEffect to pass songs down to SongOption component
+  useEffect(() => {}, [songResults]);
 
   function handleChange(e) {
     setSongName(e.target.value);
@@ -15,11 +16,11 @@ const SongSearch = () => {
   function handleSubmit(e) {
     e.preventDefault();
     // Functionality to search for song
-    const accessToken = Cookies.get('accesstoken');
+    const accessToken = Cookies.get('accessToken');
     const data = { token: accessToken, searchQuery: songName };
 
     fetch('/api/v1/spotify/songs', {
-      method: 'GET', // or 'PUT'
+      method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
       },
@@ -27,17 +28,25 @@ const SongSearch = () => {
     })
       .then(response => response.json())
       .then(response => {
-        /*
-        console.log('response is', response);
-        history.push({
-          pathname: '/room',
-          state: { isHost: true, roomInfo: response },
-        });
-        */
         const songOptions = [];
         for (let i = 0; i < response.length; i += 1) {
-          songOptions.push(<SongOption />);
+          const track = response[i].name;
+          const artist = response[i].artists[0].name;
+          const length = Math.floor(response[i].duration_ms / 1000);
+          const thumbnail = response[i].album.images[0].url;
+          const uri = response[i].uri;
+          songOptions.push(
+            <SongOption
+              roomId={props.roomId}
+              track={track}
+              artist={artist}
+              length={length}
+              thumbnail={thumbnail}
+              uri={uri}
+            />
+          );
         }
+        setSongResults(songOptions);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -66,7 +75,7 @@ const SongSearch = () => {
         />
         <input type="submit" value="Search" />
       </form>
-      <SongOption {...{ songResults, setSongResults }} />
+      {songResults}
     </div>
   );
 };
