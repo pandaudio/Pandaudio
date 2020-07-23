@@ -62,7 +62,7 @@ chatController.addMessage = async (req, res, next) => {
 chatController.getAll = async (req, res, next) => {
   try {
     const { roomId } = req.params;
-    query = `SELECT * FROM chat${roomId} ORDER BY id DESC LIMIT 50`;
+    query = `SELECT users.username, users.thumbnail, chat${roomId}.content, chat${roomId}.created_at FROM chat${roomId} INNER JOIN users ON CAST(chat${roomId}.owner as uuid)=users.id ORDER BY created_at DESC LIMIT 50`;
 
     const result = await db.query(query);
 

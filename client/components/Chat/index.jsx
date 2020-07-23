@@ -7,29 +7,65 @@ const socket = io.connect(URL);
 
 const Chat = ({ roomId }) => {
   const uuid = Cookies.get('uuid');
-  console.log('this is your useID:   ', uuid);
-  console.log('these are your props:   ', roomId);
+  // console.log('this is your useID:   ', uuid);
+  // console.log('these are your props:   ', roomId);
 
-  // Enter key in the input box will send messages
-  window.addEventListener('DOMContentLoaded', event => {
+  const [comments, addComment] = useState([]);
+  const feed = [];
+
+  useEffect(() => {
+    // Fetch chat log from db on mount, not complete
+    Axios.get(`/api/v1/rooms/${roomId}/chat`)
+      .then(response => {
+        console.log('this is the chat response:   ', response.data);
+        for (let i = response.data.length - 1; i >= 0; i--) {
+          addComment(
+            comments.push({
+              username: response.data[i].username,
+              text: response.data[i].content,
+              thumbnail: response.data[i].thumbnail,
+              created_at: response.data[i].created_at,
+            })
+          );
+        }
+        // response.data.forEach(data => {
+        //   addComment(
+        //     comments.push({
+        //       username: data.username,
+        //       text: data.content,
+        //       thumbnail: data.thumbnail,
+        //       created_at: data.created_at,
+        //     })
+        //   );
+        // console.log('this is what your comments on mount looks like   ', comments);
+        // });
+        for (let i = 0; i < comments.length; i++) {
+          feed.push(
+            <div key={i}>
+              <p>
+                <img src={comments[i].thumbnail} />
+                <span>{comments[i].username}:</span>
+                {comments[i].text}
+                <span> {comments[i].created_at}</span>
+              </p>
+            </div>
+          );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    // Enter key in the input box will send messages
     document.getElementById('chatText').addEventListener('keyup', event => {
       event.preventDefault();
       if (event.keyCode === 13) {
         document.getElementById('send').click();
       }
     });
-  });
 
-  // Fetch chat log from db on mount, not complete
-  // useEffect(() => {
-  //   Axios.get('/chat')
-  // }, []);
-
-  const [comments, addComment] = useState([
-    // { username: 'Michael', text: 'Whatup', thumbnail: 'thumbnail', created_at: 'today' },
-  ]);
-  // comments = [{username, text, thumbnail, created_at}]
-  const feed = [];
+    socket.emit('join_room', `chat${roomId}`);
+  }, []);
 
   for (let i = 0; i < comments.length; i++) {
     feed.push(
@@ -47,7 +83,7 @@ const Chat = ({ roomId }) => {
   const handleClick = () => {
     const currentMessage = document.getElementById('chatText').value;
     document.getElementById('chatText').value = '';
-    socket.emit('join_room', `chat${roomId}`);
+
     socket.emit('chat', {
       room: `chat${roomId}`, // UUID params
       message: currentMessage,
