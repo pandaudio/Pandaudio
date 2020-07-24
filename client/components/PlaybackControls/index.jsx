@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const PlaybackControls = (props) => {
+const PlaybackControls = props => {
   const [songIsPaused, setPause] = useState(true);
 
   function handleClick(e) {
@@ -18,11 +18,9 @@ const PlaybackControls = (props) => {
   }
 
   return (
-    <div>
-      <button type="submit" onClick={handleClick}>
-        {songIsPaused ? 'Play' : 'Pause'}
-      </button>
-    </div>
+    <button type="submit" onClick={handleClick}>
+      {songIsPaused ? 'Play' : 'Pause'}
+    </button>
   );
 };
 
