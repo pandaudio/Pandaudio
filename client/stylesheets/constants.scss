@@ -1,6 +1,6 @@
-$yellow: #faff00;
+$yellow: #FFD601;
 
-@mixin centerWithFlex($direction: row, $align: center, $justfiy: center) {
+@mixin centerWithFlex($direction: row, $align: center, $justify: center) {
   display: flex;
   flex-direction: $direction;
   align-items: $align;
