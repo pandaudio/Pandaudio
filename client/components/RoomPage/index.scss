@@ -32,17 +32,18 @@
       .player-cover {
         width: 250px;
         height: 250px;
-        border: thin solid white;
         border-radius: 0;
+        border: thin solid black;
 
         img {
-          display: block;
+          height: 100%
         }
       }
 
       .player-content {
         @include centerWithFlex($direction: column, $justify: space-evenly, $align: flex-start);
         padding: 0 30px;
+        width: 300px;
 
         .player-playing {}
 
@@ -52,7 +53,10 @@
           flex-direction: column;
           justify-content: space-between;
 
-          h3 { font-size: 145%; }
+          h3 { 
+            font-size: 145%; 
+            color: white;
+          }
         }
 
         .player-btn {
