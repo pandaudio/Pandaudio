@@ -32,11 +32,10 @@
       .player-cover {
         width: 250px;
         height: 250px;
-        border: thin solid white;
         border-radius: 0;
 
         img {
-          display: block;
+          height: 100%
         }
       }
 
