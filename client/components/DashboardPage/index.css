@@ -14,7 +14,7 @@ h1 {
   width: 10vh;
 }
 .dashboard-page {
-  background: #232424;
+  background: #1f1f1f;
   display: inline-block;
   flex-direction: column;
   justify-content: center;
