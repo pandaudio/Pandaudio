@@ -1,41 +1,57 @@
 * {
-  box-sizing: border-box;
   font-family: 'Ubuntu Light', 'Century Gothic', sans-serif;
   margin: 0;
   padding: 0;
   color: #f2f2f2;
-  
-} 
-
+  /* background-color: #232424; */
+  text-align: center;
+}
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px !important;
+  color: #ffffff;
+  /* left: 5vh !important; */
+  width: 10vh;
+}
+.dashboard-page {
+  background: #1f1f1f;
+  display: inline-block;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0 auto;
+}
 button {
-  background-color: #2d1e1e;
+  background-color: #393232;
   display: inline-block;
   border-radius: 6px;
-  color:  rgb(63, 121, 150);
+  color: rgb(63, 121, 150);
   text-align: center;
-  font-size: 12px;
+  font-size: 20px;
   padding: 3px;
   width: 70px;
   cursor: pointer;
   margin: 5px;
+  transition: 200ms;
 }
-
-h1 {
- font-family: Arial, Helvetica, sans-serif;
- font-size: 60px;
- color: #323131;
+button:hover {
+  background-color: #524f4f;
 }
 
 .dashboard-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  background-color: #181818;
+  justify-content: center;
+  margin: 5vh 5vh;
 }
 
 .page-header {
   margin-top: 30px;
-  margin-left: 40px;
+  margin-left: 5vh;
   margin-bottom: 30px;
   color: #323131;
 }
@@ -48,14 +64,20 @@ h1 {
 
 .dashboard-box {
   display: 1;
-  background: rgb(8,34,34);
-background: linear-gradient(0deg, rgba(8,34,34,1) 0%, rgba(58,110,136,1) 100%);
+  background-color: #787373;
+  /* background-image: url('https://images.unsplash.com/photo-1574494461754-de04dc403eec?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80');
+  background-repeat: no-repeat;
+  background-size: cover; */
+  /* background: linear-gradient(0deg, rgba(8, 34, 34, 1) 0%, rgba(58, 110, 136, 1) 100%); */
   border: 1px solid;
   border-radius: 5px;
-  padding: 40px 5px 5px;
-  width: 20%;
-  margin: 5px 5px 13px 10px;
+  padding: 0px 5px;
+  padding-top: 120px;
+  /* height: 20vh; */
+  width: 20vh;
+  height: 15vh;
+  margin: 20px 20px !important;
   float: left;
   font-size: 1.5em;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, .2);
+  /* box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); */
 }
