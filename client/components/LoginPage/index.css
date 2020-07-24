@@ -8,7 +8,7 @@
   /* margin-top: 5vh; */
   transition: 200ms;
 }
-img:hover {
+.spotifyIMG:hover {
   background-color: black;
 }
 .login {
@@ -30,8 +30,4 @@ img:hover {
   border-radius: 20px;
   width: 20vh;
   /* text-align: center; */
-}
-h1 {
-  font-size: 30px !important;
-  color: #151718 !important;
 }
