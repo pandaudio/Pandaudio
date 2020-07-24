@@ -209,6 +209,18 @@ const RoomPage = props => {
   };
 
   const { location } = props;
+  const { track_window } = playerState.data;
+
+  let songName, artists, albumName, albumArt, isPaused;
+
+  if (track_window) {
+    songName = track_window.current_track.name;
+    artists = track_window.current_track.artists;
+    albumName = track_window.current_track.album.name;
+    albumArt = track_window.current_track.album.images[0].url;
+    isPaused = playerState.data.paused;
+  }
+
   return (
     <div className="room-page">
       <div className="room-content">
@@ -226,30 +238,44 @@ const RoomPage = props => {
           </div>
         ) : null}
         <div className="room-header">
-          {/* {location.state.roomInfo.id} */}
           <h2>{roomInfo.room_name}</h2>
-          <p>{`Host: ${roomInfo.host}`}</p>
-          <p>
-            {`Uptime: ${Math.floor(
-              moment.duration(moment(roomInfo.created_at, 'HH:mm:ss').diff(moment())).asMinutes()
-            )} minutes`}
-          </p>
+          <p>Back to Lobby</p>
         </div>
-        {isHost && playerState.ready && songQueueReady ? (
-          <div className="playback-control-container">
-            <PlaybackControls
-              playSong={() => {
-                handlePlay();
-              }}
-              pauseSong={() => {
-                handlePause();
-              }}
-            />
+        <div className="room-player">
+          <div className="player-cover">
+            <img src="" alt="Image goes here" />
           </div>
-        ) : null}
+          <div className="player-content">
+            <div className="player-playing">
+              <p>{!track_window ? 'Waiting for tunes' : isPaused ? 'Paused' : 'Now Playing'}</p>
+            </div>
+            <div className="player-details">
+              <h3>{songName || 'Song Name'}</h3>
+              <p>{albumName || 'Album Name'}</p>
+              <p>0:00 / 2:30</p>
+            </div>
+            <div className="player-btn">
+              {isHost && playerState.ready && songQueueReady ? (
+                <PlaybackControls
+                  playSong={() => {
+                    handlePlay();
+                  }}
+                  pauseSong={() => {
+                    handlePause();
+                  }}
+                />
+              ) : null}
+            </div>
+          </div>
+        </div>
       </div>
-      <div className="room-chat">
-        <Chat roomId={roomInfo.id} />
+      <div className="sidebar">
+        <div className="room-queue">
+          <h1>Song Queue</h1>
+        </div>
+        <div className="room-chat">
+          <Chat roomId={roomInfo.id} />
+        </div>
       </div>
     </div>
   );

@@ -4,31 +4,76 @@
   background-color: #040404;
   height: 100vh;
   display: flex;
-
-  // background-image: url('../../assets/graffiti.jpg');
-  // background-position: center;
-  // background-size: cover;
-  // background-repeat: no-repeat;
+  
   .room-content {
     flex: 1;
-    color: $yellow;
-    padding: 80px 10% 0;
-
+    padding: 25px 50px;
+    position: relative;
+    
     h2 {
-      font-size: 300%;
+      font-size: 250%;
       margin: 0 0 10px;
+      font-weight: 600;
     }
-
+    
     p {
-      color: lighten(black, 50%);
+      color: $yellow;
       font-size: 90%;
       position: relative;
-      left: 5px;
+    }
+
+    .room-player {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-45%, -50%);
+      @include centerWithFlex($align: stretch);
+
+      .player-cover {
+        width: 250px;
+        height: 250px;
+        border: thin solid white;
+        border-radius: 0;
+
+        img {
+          display: block;
+        }
+      }
+
+      .player-content {
+        @include centerWithFlex($direction: column, $justify: space-evenly, $align: flex-start);
+        padding: 0 30px;
+
+        .player-playing {}
+
+        .player-details {
+          height: 70px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          h3 { font-size: 145%; }
+        }
+
+        .player-btn {
+          button {
+            color: white;
+            border: thin solid white;
+            border-radius: 0;
+            background-color: transparent;
+            transition: 0.1s;
+
+            &:hover {
+              background-color: lighten(black, 25%);
+            }
+          }
+        }
+      }
     }
   }
 
-  .room-chat {
-    width: 400px;
+  .sidebar {
+    width: 30%;
     height: 100%;
   }
 }
