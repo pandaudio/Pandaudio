@@ -22,7 +22,7 @@ const Chat = ({ roomId }) => {
           feed.push(
             <div key={i}>
               <p>
-                <img src={response.data[i].thumbnail} />
+                <img className="chat-img" src={response.data[i].thumbnail} />
                 <span> {response.data[i].username}: </span>
                 {response.data[i].content}
               </p>
@@ -67,7 +67,7 @@ const Chat = ({ roomId }) => {
       [
         <div key={data.created_at}>
           <p>
-            <img src={data.thumbnail} />
+            <img className="chat-img" src={data.thumbnail} />
             <span> {data.username}:</span>
             {data.message}
             <span> {new Date().toLocaleTimeString()} </span>
