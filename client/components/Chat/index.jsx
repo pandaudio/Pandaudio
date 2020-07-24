@@ -23,9 +23,8 @@ const Chat = ({ roomId }) => {
             <div key={i}>
               <p>
                 <img src={response.data[i].thumbnail} />
-                <span>{response.data[i].username}:</span>
+                <span> {response.data[i].username}: </span>
                 {response.data[i].content}
-                <span> {response.data[i].created_at}</span>
               </p>
             </div>
           );
@@ -69,9 +68,9 @@ const Chat = ({ roomId }) => {
         <div key={data.created_at}>
           <p>
             <img src={data.thumbnail} />
-            <span>{data.username}:</span>
+            <span> {data.username}:</span>
             {data.message}
-            <span> {new Date().toLocaleTimeString()}</span>
+            <span> {new Date().toLocaleTimeString()} </span>
           </p>
         </div>,
       ].concat(comments)
@@ -80,7 +79,6 @@ const Chat = ({ roomId }) => {
 
   return (
     <div className="chatBox">
-      <h1>Chat.js</h1>
       <div className="chatFeed">{comments}</div>
       <input type="text" id="chatText" />
       <button className="firstButton" id="send" onClick={handleClick}>
