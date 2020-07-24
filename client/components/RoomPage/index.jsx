@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useStore, useDispatch } from 'react-redux';
+import moment from 'moment';
 import PlaybackControls from '../PlaybackControls';
 import SongSearch from '../SongSearch';
+import HostDisableRoomButton from '../HostDisableRoomButton';
 import Chat from '../Chat';
-import axios from 'axios';
-import moment from 'moment';
-import { useSelector, useStore, useDispatch } from 'react-redux';
 import { SONG_QUEUE_UPDATE } from '../../store/action_types/songQueue';
-import './index.scss'
+import './index.scss';
 
 const URL = process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000';
 const socket = io.connect(URL);
@@ -71,7 +71,7 @@ const RoomPage = props => {
     socket.on('play', data => {
       console.log('Incoming play message: ', data);
 
-      //only play song if the targetGuest is my own socket.id or if its falsy (broadcast to everyone to play)
+      // only play song if the targetGuest is my own socket.id or if its falsy (broadcast to everyone to play)
       if (data.targetGuest === socket.id || !data.targetGuest) {
         playSong(window.globalSpotifyPlayer, data.spotify_uris, data.start_time);
       }
@@ -82,8 +82,6 @@ const RoomPage = props => {
       console.log('Incoming message: ', data);
       pauseSong(window.globalSpotifyPlayer);
     });
-
-
   }, []);
 
   const setup = () => {
@@ -93,14 +91,15 @@ const RoomPage = props => {
       method: 'GET',
       headers: {
         'Content-Type': 'appplication/json',
-      }
-    }).then(response => response.json())
-    .then(data => {
-      console.log('grabbed all the songs from db', data)
-      dispatch({type: SONG_QUEUE_UPDATE, payload: data});
-      setSongQueueReady(true);
+      },
     })
-  }
+      .then(response => response.json())
+      .then(data => {
+        console.log('grabbed all the songs from db', data);
+        dispatch({ type: SONG_QUEUE_UPDATE, payload: data });
+        setSongQueueReady(true);
+      });
+  };
 
   const getPlayerInfoAndEmit = (player, requestData) => {
     const {
@@ -125,7 +124,7 @@ const RoomPage = props => {
           const trackWindow = store.getState().player.data.track_window;
           const currentTrack = trackWindow.current_track;
           const nextTracks = trackWindow.next_tracks;
-          const tracks = [currentTrack, ...nextTracks]
+          const tracks = [currentTrack, ...nextTracks];
 
           socket.emit('play', {
             room: `song${roomInfo.id}`,
@@ -182,7 +181,6 @@ const RoomPage = props => {
     if (!initialPlay) {
       uris = songQueueState.data.map(song => song.uri);
       setInitialPlay(true);
-      
     } else {
       const trackWindow = store.getState().player.data.track_window;
       const currentTrack = trackWindow.current_track;
@@ -214,36 +212,41 @@ const RoomPage = props => {
   return (
     <div className="room-page">
       <div className="room-content">
-      {location.state.isHost ? (
-        <div className="addsong-container">
-          <button className="btn-addsong" type="submit" onClick={toggleOpen}>
-            Add Song
-          </button>
-          <Modal open={open} onClose={toggleOpen} className={classes.modal}>
-            <div className={classes.paper}>
-              <SongSearch roomId={location.state.roomInfo.id} />
-            </div>
-          </Modal>
+        {location.state.isHost ? (
+          <div className="addsong-container">
+            <button className="btn-addsong" type="submit" onClick={toggleOpen}>
+              Add Song
+            </button>
+            <HostDisableRoomButton roomId={location.state.roomInfo.id} />
+            <Modal open={open} onClose={toggleOpen} className={classes.modal}>
+              <div className={classes.paper}>
+                <SongSearch roomId={location.state.roomInfo.id} />
+              </div>
+            </Modal>
+          </div>
+        ) : null}
+        <div className="room-header">
+          {/* {location.state.roomInfo.id} */}
+          <h2>{roomInfo.room_name}</h2>
+          <p>{`Host: ${roomInfo.host}`}</p>
+          <p>
+            {`Uptime: ${Math.floor(
+              moment.duration(moment(roomInfo.created_at, 'HH:mm:ss').diff(moment())).asMinutes()
+            )} minutes`}
+          </p>
         </div>
-      ) : null}
-      <div className="room-header">
-        {/* {location.state.roomInfo.id} */}
-      <h2>{roomInfo.room_name}</h2>
-      <p>{`Host: ${roomInfo.host}`}</p>
-      <p>{`Uptime: ${Math.floor(moment.duration(moment(roomInfo.created_at,'HH:mm:ss').diff(moment())).asMinutes())} minutes`}</p>
-      </div>
-      {isHost && playerState.ready && songQueueReady ? (
-        <div className="playback-control-container">
-          <PlaybackControls
-            playSong={() => {
-              handlePlay();
-            }}
-            pauseSong={() => {
-              handlePause();
-            }}
-          />
-        </div>
-      ) : null}
+        {isHost && playerState.ready && songQueueReady ? (
+          <div className="playback-control-container">
+            <PlaybackControls
+              playSong={() => {
+                handlePlay();
+              }}
+              pauseSong={() => {
+                handlePause();
+              }}
+            />
+          </div>
+        ) : null}
       </div>
       <div className="room-chat">
         <Chat roomId={roomInfo.id} />
