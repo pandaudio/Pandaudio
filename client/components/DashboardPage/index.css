@@ -2,9 +2,6 @@
   font-family: 'Ubuntu Light', 'Century Gothic', sans-serif;
   margin: 0;
   padding: 0;
-  color: #f2f2f2;
-  /* background-color: #232424; */
-  text-align: center;
 }
 h1 {
   font-family: Arial, Helvetica, sans-serif;
@@ -12,6 +9,9 @@ h1 {
   color: #ffffff;
   /* left: 5vh !important; */
   width: 10vh;
+}
+.lobby {
+  color: white !important;
 }
 .dashboard-page {
   background: #1f1f1f;
