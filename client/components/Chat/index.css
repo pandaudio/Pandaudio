@@ -7,8 +7,9 @@
   overflow-y: scroll;
   display: flex;
   flex-direction: column-reverse;
+  color: white;
 }
-img {
+.chat-img {
   height: 30px !important;
   width: 30px !important;
   border-radius: 50%;

@@ -243,7 +243,7 @@ const RoomPage = props => {
         </div>
         <div className="room-player">
           <div className="player-cover">
-            <img src="" alt="Image goes here" />
+            {albumArt && <img src={albumArt} />}
           </div>
           <div className="player-content">
             <div className="player-playing">
