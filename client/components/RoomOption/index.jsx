@@ -22,7 +22,7 @@ const RoomOption = props => {
 
   return (
     <div className="roomOption">
-      <p>{room.room_name}</p>
+      <p className="roomName">{room.room_name}</p>
       <button type="submit" onClick={handleClick}>
         Join
       </button>
