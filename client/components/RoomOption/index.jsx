@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import './index.css';
 
 const RoomOption = props => {
   const history = useHistory();
@@ -20,7 +21,7 @@ const RoomOption = props => {
   }
 
   return (
-    <div>
+    <div className="roomOption">
       <p>{room.room_name}</p>
       <button type="submit" onClick={handleClick}>
         Join

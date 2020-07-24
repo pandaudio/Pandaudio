@@ -62,7 +62,7 @@ const DashboardPage = () => {
   return (
     <div className="dashboard-page">
       <div className="page-header">
-        <h1>Pandaudio</h1>
+        <h1>Lobby</h1>
       </div>
       <div className="create-room">
         <button type="submit" onClick={toggleOpen}>

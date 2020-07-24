@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useSelector, useStore, useDispatch } from 'react-redux';
+import moment from 'moment';
 import PlaybackControls from '../PlaybackControls';
 import SongSearch from '../SongSearch';
+import HostDisableRoomButton from '../HostDisableRoomButton';
 import Chat from '../Chat';
-import axios from 'axios';
-import moment from 'moment';
-import { useSelector, useStore, useDispatch } from 'react-redux';
 import { SONG_QUEUE_UPDATE } from '../../store/action_types/songQueue';
 import './index.scss';
 
@@ -20,10 +20,10 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
   },
   paper: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#151515',
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    // padding: theme.spacing(2, 4, 3),
   },
 }));
 
@@ -71,7 +71,7 @@ const RoomPage = props => {
     socket.on('play', data => {
       console.log('Incoming play message: ', data);
 
-      //only play song if the targetGuest is my own socket.id or if its falsy (broadcast to everyone to play)
+      // only play song if the targetGuest is my own socket.id or if its falsy (broadcast to everyone to play)
       if (data.targetGuest === socket.id || !data.targetGuest) {
         playSong(window.globalSpotifyPlayer, data.spotify_uris, data.start_time);
       }
@@ -229,6 +229,7 @@ const RoomPage = props => {
             <button className="btn-addsong" type="submit" onClick={toggleOpen}>
               Add Song
             </button>
+            <HostDisableRoomButton roomId={location.state.roomInfo.id} />
             <Modal open={open} onClose={toggleOpen} className={classes.modal}>
               <div className={classes.paper}>
                 <SongSearch roomId={location.state.roomInfo.id} />

@@ -3,13 +3,13 @@
 }
 .chatFeed {
   height: 500px;
-  background-color: grey;
+  background-color: transparent;
   overflow-y: scroll;
   display: flex;
   flex-direction: column-reverse;
 }
 img {
-  height: 50px;
-  width: auto;
+  height: 30px !important;
+  width: 30px !important;
   border-radius: 50%;
 }

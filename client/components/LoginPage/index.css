@@ -29,5 +29,6 @@ img:hover {
   border-radius: 20px;
 }
 h1 {
+  font-size: 30px !important;
   color: #151718;
 }
