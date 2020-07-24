@@ -1,0 +1,77 @@
+.songSearch-container {
+  position: relative;
+  display: flex;
+}
+
+.songSearch-container-dummy-X {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -60px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid white;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.songSearch-results-container {
+  box-sizing: border-box;
+  width: 720px;
+  min-height: 500px;
+  padding: 24px;
+}
+
+.songSearch-header {
+  color: white;
+  margin: 0 0 24px 0;
+  font-size: 2.0rem;
+}
+
+.songSearch-form {
+  display: flex;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+.songSearch-bar {
+  outline: none;
+  border: none;
+  flex: 1 0 80%;
+  background-color: transparent;
+  font-size: 16px;
+}
+
+.songSearch-queue-container {
+  padding: 24px;
+  width: 300px;
+  min-height: 100%;
+  max-height: 100%;
+  overflow: scroll;
+}
+
+.songSearch-queue-header {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.songSearch-queue-linebreak {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin: 16px 0;
+}
+
+.songSearch-queue-item {
+  margin: 16px 0;
+}
+
+.songSearch-submit {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: white;
+  font-weight: 700;
+}

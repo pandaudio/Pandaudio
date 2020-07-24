@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { SONG_QUEUE_ADD } from '../../store/action_types/songQueue';
+import './index.css'
 
 const SongOption = props => {
   const { roomId, track, artist, length, thumbnail, uri } = props;
@@ -47,11 +48,11 @@ const SongOption = props => {
   }
 
   return (
-    <div>
-      <button type="submit" onClick={handleClick}>
-        Add Song to Queue
+    <div className="songOption">
+      <span>{`${track} | ${artist} | ${length}`}</span>
+      <button className="songOption-add" type="submit" onClick={handleClick}>
+        ADD
       </button>
-      <span>{`Song: ${track} | Artist: ${artist} | Length: ${length}`}</span>
     </div>
   );
 };
